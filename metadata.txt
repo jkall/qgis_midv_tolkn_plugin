@@ -1,0 +1,26 @@
+[general]
+;mandatory metadata entries
+name=midv_tolkn
+qgisMinimumVersion=2.14
+description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
+version=Version 0.1
+author=Josef Källgården
+email=groundwatergis@gmail.com
+
+;optional metadata entries
+tags=hydrogeology,groundwater
+icon=icons/midv_tolkn.png
+homepage=https://github.com/jkall/qgis-midvatten-plugin/wiki
+authorName=Josef Källgården
+tracker=https://github.com/jkall/qgis-midvatten-plugin/issues?state=open
+repository=https://github.com/jkall/qgis-midvatten-plugin
+experimental=True
+deprecated=False
+
+changelog=
+        Version 0.1
+        - starting
+
+;for the new plugin repo
+about=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
+

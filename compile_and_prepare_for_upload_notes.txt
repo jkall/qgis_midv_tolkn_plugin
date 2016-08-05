@@ -1,0 +1,15 @@
+# ----------- file format and encoding -------------
+- windows line endings (CR LF)
+- only utf-8 in all code
+# ----------- icons -------------
+- icons should be 22x22 px
+- set paths to icons in resources.qrc
+- compile resources.qrc (i.e. update resources.py):
+$ cd ~/pythoncode/qgis_plugins/midv_tolkn && pyrcc4 -o resources.py resources.qrc
+
+
+# ---------- prepare for upload to my plugin repo ---------------
+make a zipped archive of midvatten folder, excluding: 
+- *.pyc
+- gitignore file
+- .git folder
