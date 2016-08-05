@@ -10,10 +10,10 @@ email=groundwatergis@gmail.com
 ;optional metadata entries
 tags=hydrogeology,groundwater
 icon=icons/midv_tolkn.png
-homepage=https://github.com/jkall/qgis-midvatten-plugin/wiki
+homepage=https://github.com/jkall/qgis_midv_tolkn_plugin
 authorName=Josef Källgården
-tracker=https://github.com/jkall/qgis-midvatten-plugin/issues?state=open
-repository=https://github.com/jkall/qgis-midvatten-plugin
+tracker=https://github.com/jkall/qgis_midv_tolkn_plugin/issues?state=open
+repository=https://github.com/jkall/qgis_midv_tolkn_plugin
 experimental=True
 deprecated=False
 
