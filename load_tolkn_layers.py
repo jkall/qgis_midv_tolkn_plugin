@@ -72,7 +72,8 @@ class LoadLayers():
         uri.setDatabase(self.dbpath)
         canvas = self.iface.mapCanvas()
         layer_list = []
-        map_canvas_layer_list=[]
+        layer_name_list = []
+        layer_dict = dict() # name as key and layer as value
 
         # first add all data domains (beginning with zz_ in the database)
         conn_ok, dd_tables = utils.sql_load_fr_db("select name from sqlite_master where name like 'zz_%'", self.dbpath)
@@ -83,6 +84,7 @@ class LoadLayers():
             uristring= 'dbname="' + self.dbpath + '" table="' + tablename + '"'
             layer = QgsVectorLayer(uristring,tablename, 'spatialite')
             layer_list.append(layer)
+            layer_name_list.append(layer.name())
 
         #then load all spatial layers
         layers = default_layers()
@@ -90,6 +92,7 @@ class LoadLayers():
             uri.setDataSource('',tablename,'geometry')
             layer = QgsVectorLayer(uri.uri(), tablename, 'spatialite') # Adding the layer as 'spatialite' instead of ogr vector layer is preferred
             layer_list.append(layer)
+            layer_name_list.append(layer.name())
         
         #now loop over all the layers and set styles etc
         for layer in layer_list:
@@ -98,10 +101,9 @@ class LoadLayers():
                 print(layer.name() + ' is not valid layer')
                 pass
             else:
-                map_canvas_layer_list.append(QgsMapCanvasLayer(layer))
                 QgsMapLayerRegistry.instance().addMapLayers([layer],False)
                 MyGroup.insertLayer(0,layer)
-                
+                layer_dict[layer.name()] = layer
 
                 #now try to load the style file
                 stylefile = os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",layer.name() + ".qml")
@@ -110,18 +112,19 @@ class LoadLayers():
                 except:
                     pass
                 if layer.name() == 'gvmag':#zoom to gvmag extent
-                    gvmag_lyr = layer
                     canvas.setExtent(layer.extent())
                 else:
                     pass
 
         # fix value relations
         for lyr in layers.keys():
-            if lyr in layer_list:
-                self.create_layer_value_relations(utils.find_layer(lyr), utils.find_layer(layers[lyr]), 2, 'typ','beskrivning')
+            #print(lyr)
+            if lyr in layer_name_list:
+                #print('...is in layer_list')
+                self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], 2, 'typ','beskrivning')
 
         #special for gvflode
-        self.create_layer_value_relations(utils.find_layer('gvflode'), utils.find_layer('zz_gvmag'), 5, 'typ','beskrivning')
+        self.create_layer_value_relations(layer_dict['gvflode'], layer_dict['zz_gvmag'], 5, 'typ','beskrivning')
             
         #finally refresh canvas
         canvas.refresh()
@@ -146,7 +149,7 @@ class LoadLayers():
                 QgsProject.instance().relationManager().addRelation(rel)
                 #validate
                 for key in QgsProject.instance().relationManager().relations().iterkeys():
-                    print(key)
+                    #print(key)
                     if str(key)==rel.id():
                         print('added relation %s'%str(lyr))
             else:
@@ -182,20 +185,28 @@ class LoadLayers():
         """
 
     def create_layer_value_relations(self, the_layer, target_layer, index,key_field, value_field):#these are layer-specific value maps, not project relations
-        print(the_layer.name(), target_layer.name(), str(index),key_field, value_field)
-        print(target_layer.id())
+        #print(the_layer.name(), target_layer.name(), str(index),key_field, value_field)
+        #print(target_layer.name())
         the_layer.editFormConfig().setWidgetType(index,"ValueRelation")
-        #följande verkar inte funka!!
-        the_layer.valueRelation(index).mLayer = target_layer.id()
-        the_layer.valueRelation(index).mKey = key_field
-        the_layer.valueRelation(index).mValue = value_field
-        the_layer.valueRelation(index).mAllowNull = True
-        the_layer.valueRelation(index).mOrderByValue = True
+
+        cfg = dict()
+        cfg['Layer'] = target_layer.id()
+        cfg['Key'] = key_field
+        cfg['Value'] = value_field
+        cfg['AllowNull'] = True
+        cfg['OrderByValue'] = True
+        cfg['UseCompleter']= False
+        cfg['AllowMulti']= False
+        # Add more if you like
+        the_layer.editFormConfig().setWidgetConfig(index, cfg)
+
+        #u'UseCompleter': False, u'AllowMulti': False, u'AllowNull': True, u'OrderByValue': True, u'Value': u'beskrivning', u'Key': u'typ'
 
     def remove_layers(self): 
         try:
             remove_group = self.root.findGroup(self.group_name)
             self.root.removeChildNode(remove_group)
+            qgis.utils.iface.messageBar().pushMessage("Information","""Removed old group 'Midvatten_TolkningsDB with associated layers""",1,duration=10)
         except:
             print('could not remove layers, probably not existing')
             

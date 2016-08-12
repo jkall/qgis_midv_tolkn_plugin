@@ -123,9 +123,12 @@ class midv_tolkn:
         self.iface.removeToolBarIcon(self.actionloadthelayers)
 
         # Remove the plugin menu items and icons
-        self.midv_menu.removeAction(self.menu.menuAction())
-        self.midv_menu.removeAction(self.menu_separator1)
-        self.midv_menu.removeAction(self.menu_separator2)
+        try:
+                self.midv_menu.removeAction(self.menu.menuAction())
+                self.midv_menu.removeAction(self.menu_separator1)
+                self.midv_menu.removeAction(self.menu_separator2)
+        except:
+                pass
         if self.owns_midv_menu: #indicator that this plugin must clean up the midvatten menu
             menubar = self.midv_menu.parentWidget()
             menubar.removeAction(self.midv_menu.menuAction())
