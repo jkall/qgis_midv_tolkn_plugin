@@ -7,10 +7,10 @@ insert into  "zz_gvflode"("typ","beskrivning") values ('ospec','ospecificierat g
 insert into  "zz_gvdel"("typ","beskrivning") values ('fast','fast vattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('rörlig','rörlig vattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('annan gräns','annan hydraulisk gräns');
-insert into  "zz_gvmag"("typ","beskrivning") values ('centralt','central del av huvudmagasinet');
+insert into  "zz_gvmag"("typ","beskrivning") values ('centralt','huvudmagasinets centrala delar');
 insert into  "zz_gvmag"("typ","beskrivning") values ('huvudmag','huvudmagasinet');
-insert into  "zz_gvmag"("typ","beskrivning") values ('sidomag','sidomagasin');
-insert into  "zz_gvmag"("typ","beskrivning") values ('annat','annat magasin');
+insert into  "zz_gvmag"("typ","beskrivning") values ('jordlager','magasin i jordlager');
+insert into  "zz_gvmag"("typ","beskrivning") values ('annat','annat magasin, t.ex. ytvatten');
 insert into  "zz_gvmag"("typ","beskrivning") values ('ytliga jordlager','magasin i ytliga jordlager');
 insert into  "zz_gvmag"("typ","beskrivning") values ('berg','magasin i berggrunden');
 insert into  "zz_gvmag"("typ","beskrivning") values ('ospec','ospecificierat');

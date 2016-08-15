@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.14.4-Essen" minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="1" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.14.4-Essen" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="1" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <edittypes>
     <edittype widgetv2type="TextEdit" name="pkuid">
       <widgetv2config IsMultiline="0" fieldEditable="0" UseHtml="0" labelOnTop="0"/>
@@ -8,7 +8,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="typ">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160815085800181" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160815104937458" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="ursprung">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -22,19 +22,25 @@
   </edittypes>
   <renderer-v2 forceraster="0" symbollevels="0" type="RuleRenderer" enableorderby="0">
     <rules key="{b48037d2-b3fe-45c3-bff0-74ccb9bf0713}">
-      <rule filter=" &quot;typ&quot; is not null" key="{83c47323-2d40-439c-a86d-9835a7358263}" symbol="0" label="Symbolik 1 - yttre linje">
-        <rule filter=" lower(&quot;typ&quot;) like '%centralt%'" key="{c7392ecc-cf39-4f67-9838-4397399ba832}" symbol="1" label="centralt gvmagasin"/>
-        <rule filter=" lower(&quot;typ&quot;) like '%sidomag%'" key="{48fae3b1-c145-4f19-b0c7-69fd8723b0a0}" symbol="2" label="sidomagasin"/>
-        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{783f37f4-2b1f-400e-a109-c85b2810c0d8}" symbol="3" label="huvudmagasin"/>
-        <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{2fe2d829-cd7f-47fe-a582-52eb301a20f4}" symbol="4" label="annat magasin"/>
-        <rule filter="ELSE" key="{9501b5ab-c8fc-42c1-ab9a-1fea945af8ab}" symbol="5" label="ospecificerat grundvattenmagasin"/>
+      <rule filter=" &quot;typ&quot; is not null" key="{1d7719fa-9088-4e0a-a38f-ed88e6952138}" symbol="0" label="Symbolik 1 - yttre linje">
+        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%' or  lower(&quot;typ&quot;)  like  '%central%'" key="{2b7ecef8-9eb8-425c-a538-df2efd653086}" symbol="1" label="huvudmagasin">
+          <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{817d207b-7acd-4997-a85d-e3f7dd701dfe}" symbol="2" label="huvudmagasinets centrala delar"/>
+        </rule>
+        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{61292958-cca7-4d2c-94e1-6f04e45b69a4}" symbol="3" label="magasin i jordlager, som ej är huvudmag"/>
+        <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{5390ff5f-d929-4237-9de8-fa96e521cbd4}" symbol="4" label="magasin i ytliga jordlager, som ej är huvudmag"/>
+        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{fa82f944-9edc-438a-b876-7b4afba0286f}" symbol="5" label="magasin i berggrunden, som ej är huvudmag"/>
+        <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{fdd1e883-3a4f-49a6-af80-b9c14e5611c3}" symbol="6" label="annat magasin, t.ex. ytvatten"/>
+        <rule filter="ELSE" key="{208c906d-5096-4561-8b8c-827315446fe5}" symbol="7" label="ospecificerat grundvattenmagasin"/>
       </rule>
-      <rule filter=" &quot;typ&quot; is not null" key="{035f29c3-8932-4301-8389-a5b1e2846048}" symbol="6" label="Symbolik 2 - fyllda polygoner">
-        <rule filter=" lower(&quot;typ&quot;) like '%centralt%'" key="{1546fbbe-35ae-4bd5-ad48-4f4a0803dde7}" symbol="7" label="centralt gvmagasin"/>
-        <rule filter=" lower(&quot;typ&quot;) like '%sidomag%'" key="{2dd6da9e-4c87-4fa9-8fc6-e5af56bbe553}" symbol="8" label="sidomagasin"/>
-        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{0927be4e-36cf-4ad7-8a45-c9d4a20cb7a8}" symbol="9" label="huvudmagasin"/>
-        <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{df4c2b13-8fa1-41f5-b18f-9a40e9a6a68b}" symbol="10" label="annat magasin"/>
-        <rule filter="ELSE" key="{934c0292-fe1e-4492-a0eb-881bcd5a97bb}" symbol="11" label="ospecificerat grundvattenmagasin"/>
+      <rule checkstate="0" filter=" &quot;typ&quot; is not null" key="{83c47323-2d40-439c-a86d-9835a7358263}" symbol="8" label="Symbolik 2 - fyllda polygoner">
+        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%' or  lower(&quot;typ&quot;)  like  '%central%'" key="{81e6932f-1111-4b8e-94d3-ed96a33a0443}" symbol="9" label="huvudmagasin">
+          <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{4e4ba3fa-88eb-4b85-a59f-4854349adba6}" symbol="10" label="huvudmagasinets centrala delar"/>
+        </rule>
+        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{48fae3b1-c145-4f19-b0c7-69fd8723b0a0}" symbol="11" label="magasin i jordlager, som ej är huvudmag"/>
+        <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{bf015d45-723d-449c-90d0-c74d8a9c5607}" symbol="12" label="magasin i ytliga jordlager, som ej är huvudmag"/>
+        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{2fe2d829-cd7f-47fe-a582-52eb301a20f4}" symbol="13" label="magasin i berggrunden, som ej är huvudmag"/>
+        <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{d0bd5354-1c2a-4d6e-9a1e-61a32367fb0d}" symbol="14" label="annat magasin, t.ex. ytvatten"/>
+        <rule filter="ELSE" key="{9501b5ab-c8fc-42c1-ab9a-1fea945af8ab}" symbol="15" label="ospecificerat grundvattenmagasin"/>
       </rule>
     </rules>
     <symbols>
@@ -54,25 +60,6 @@
         </layer>
       </symbol>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
-        <layer pass="2" class="SimpleLine" locked="0">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="solid"/>
-          <prop k="line_width" v="2.5"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="10">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
@@ -81,8 +68,8 @@
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="dot"/>
-          <prop k="line_width" v="1"/>
+          <prop k="line_style" v="solid"/>
+          <prop k="line_width" v="1.2"/>
           <prop k="line_width_unit" v="MM"/>
           <prop k="offset" v="0"/>
           <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -90,9 +77,11 @@
           <prop k="use_custom_dash" v="0"/>
           <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
         </layer>
+      </symbol>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="10">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="166,206,227,136"/>
+          <prop k="color" v="63,93,116,255"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -104,27 +93,70 @@
           <prop k="style" v="solid"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="11">
-        <layer pass="0" class="SimpleLine" locked="0">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="156,0,170,255"/>
-          <prop k="line_style" v="solid"/>
-          <prop k="line_width" v="1"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-        </layer>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="11">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="166,206,227,136"/>
+          <prop k="color" v="92,169,228,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="no"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="12">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="202,223,234,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="no"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="13">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="195,228,198,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="no"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="14">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="195,228,160,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="no"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="15">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="195,228,160,255"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -145,8 +177,8 @@
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="dash"/>
-          <prop k="line_width" v="1.2"/>
+          <prop k="line_style" v="solid"/>
+          <prop k="line_width" v="2.5"/>
           <prop k="line_width_unit" v="MM"/>
           <prop k="offset" v="0"/>
           <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -156,7 +188,7 @@
         </layer>
       </symbol>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="3">
-        <layer pass="0" class="SimpleLine" locked="0">
+        <layer pass="2" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -164,7 +196,7 @@
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="solid"/>
+          <prop k="line_style" v="dash"/>
           <prop k="line_width" v="1.2"/>
           <prop k="line_width_unit" v="MM"/>
           <prop k="offset" v="0"/>
@@ -182,7 +214,7 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="0,170,0,255"/>
+          <prop k="line_color" v="4,255,0,255"/>
           <prop k="line_style" v="dot"/>
           <prop k="line_width" v="1"/>
           <prop k="line_width_unit" v="MM"/>
@@ -201,6 +233,44 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
+          <prop k="line_color" v="237,0,0,255"/>
+          <prop k="line_style" v="dot"/>
+          <prop k="line_width" v="1"/>
+          <prop k="line_width_unit" v="MM"/>
+          <prop k="offset" v="0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+        </layer>
+      </symbol>
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="6">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="customdash_unit" v="MM"/>
+          <prop k="draw_inside_polygon" v="1"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="line_color" v="170,85,255,255"/>
+          <prop k="line_style" v="dot"/>
+          <prop k="line_width" v="1"/>
+          <prop k="line_width_unit" v="MM"/>
+          <prop k="offset" v="0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+        </layer>
+      </symbol>
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="7">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="customdash_unit" v="MM"/>
+          <prop k="draw_inside_polygon" v="1"/>
+          <prop k="joinstyle" v="bevel"/>
           <prop k="line_color" v="170,85,255,255"/>
           <prop k="line_style" v="solid"/>
           <prop k="line_width" v="1"/>
@@ -212,7 +282,7 @@
           <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="6">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="8">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="color" v="218,19,29,255"/>
@@ -227,91 +297,10 @@
           <prop k="style" v="no"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="7">
-        <layer pass="2" class="SimpleLine" locked="0">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="solid"/>
-          <prop k="line_width" v="2.5"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-        </layer>
+      <symbol alpha="0.5" clip_to_extent="1" type="fill" name="9">
         <layer pass="0" class="SimpleFill" locked="0">
           <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="0,70,124,158"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="no"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="8">
-        <layer pass="2" class="SimpleLine" locked="0">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="dash"/>
-          <prop k="line_width" v="1.2"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-        </layer>
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="0,124,219,158"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="no"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="9">
-        <layer pass="0" class="SimpleLine" locked="0">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="0,170,0,255"/>
-          <prop k="line_style" v="solid"/>
-          <prop k="line_width" v="1.2"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-        </layer>
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="0,94,166,158"/>
+          <prop k="color" v="92,135,169,255"/>
           <prop k="joinstyle" v="bevel"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
