@@ -6,17 +6,37 @@
       <se:Name>gvmag</se:Name>
       <se:FeatureTypeStyle>
         <se:Rule>
+          <se:Name>Symbolik 1 - yttre linje</se:Name>
+          <se:Description>
+            <se:Title>Symbolik 1 - yttre linje</se:Title>
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+            <ogc:Not>
+              <ogc:PropertyIsNull>
+                <ogc:PropertyName>typ</ogc:PropertyName>
+              </ogc:PropertyIsNull>
+            </ogc:Not>
+          </ogc:Filter>
+        </se:Rule>
+        <se:Rule>
           <se:Name>centralt gvmagasin</se:Name>
           <se:Description>
             <se:Title>centralt gvmagasin</se:Title>
           </se:Description>
           <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
-            <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
-              <ogc:Function name="lower">
-                <ogc:PropertyName>typ</ogc:PropertyName>
-              </ogc:Function>
-              <ogc:Literal>%centralt%</ogc:Literal>
-            </ogc:PropertyIsLike>
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%centralt%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
           </ogc:Filter>
           <se:LineSymbolizer>
             <se:Stroke>
@@ -33,12 +53,19 @@
             <se:Title>sidomagasin</se:Title>
           </se:Description>
           <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
-            <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
-              <ogc:Function name="lower">
-                <ogc:PropertyName>typ</ogc:PropertyName>
-              </ogc:Function>
-              <ogc:Literal>%sidomag%</ogc:Literal>
-            </ogc:PropertyIsLike>
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%sidomag%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
           </ogc:Filter>
           <se:LineSymbolizer>
             <se:Stroke>
@@ -56,12 +83,19 @@
             <se:Title>huvudmagasin</se:Title>
           </se:Description>
           <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
-            <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
-              <ogc:Function name="lower">
-                <ogc:PropertyName>typ</ogc:PropertyName>
-              </ogc:Function>
-              <ogc:Literal>%huvudmag%</ogc:Literal>
-            </ogc:PropertyIsLike>
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%huvudmag%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
           </ogc:Filter>
           <se:LineSymbolizer>
             <se:Stroke>
@@ -78,12 +112,19 @@
             <se:Title>annat magasin</se:Title>
           </se:Description>
           <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
-            <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
-              <ogc:Function name="lower">
-                <ogc:PropertyName>typ</ogc:PropertyName>
-              </ogc:Function>
-              <ogc:Literal>%annat%</ogc:Literal>
-            </ogc:PropertyIsLike>
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%annat%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
           </ogc:Filter>
           <se:LineSymbolizer>
             <se:Stroke>
@@ -100,7 +141,7 @@
           <se:Description>
             <se:Title>ospecificerat grundvattenmagasin</se:Title>
           </se:Description>
-          <!--Parser Error: syntax error, unexpected ELSE - Expression was: ELSE-->
+          <!--Parser Error: syntax error, unexpected ELSE - Expression was:  "typ" is not null AND ELSE-->
           <se:LineSymbolizer>
             <se:Stroke>
               <se:SvgParameter name="stroke">#aa55ff</se:SvgParameter>
@@ -109,6 +150,182 @@
               <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
             </se:Stroke>
           </se:LineSymbolizer>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>Symbolik 2 - fyllda polygoner</se:Name>
+          <se:Description>
+            <se:Title>Symbolik 2 - fyllda polygoner</se:Title>
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+            <ogc:Not>
+              <ogc:PropertyIsNull>
+                <ogc:PropertyName>typ</ogc:PropertyName>
+              </ogc:PropertyIsNull>
+            </ogc:Not>
+          </ogc:Filter>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>centralt gvmagasin</se:Name>
+          <se:Description>
+            <se:Title>centralt gvmagasin</se:Title>
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%centralt%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
+          </ogc:Filter>
+          <se:LineSymbolizer>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#00aa00</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">2.5</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
+              <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
+            </se:Stroke>
+          </se:LineSymbolizer>
+          <se:PolygonSymbolizer>
+            <se:Fill>
+              <se:SvgParameter name="fill">#00467c</se:SvgParameter>
+              <se:SvgParameter name="fill-opacity">0.62</se:SvgParameter>
+            </se:Fill>
+          </se:PolygonSymbolizer>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>sidomagasin</se:Name>
+          <se:Description>
+            <se:Title>sidomagasin</se:Title>
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%sidomag%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
+          </ogc:Filter>
+          <se:LineSymbolizer>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#00aa00</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">1.2</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
+              <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
+              <se:SvgParameter name="stroke-dasharray">4 2</se:SvgParameter>
+            </se:Stroke>
+          </se:LineSymbolizer>
+          <se:PolygonSymbolizer>
+            <se:Fill>
+              <se:SvgParameter name="fill">#007cdb</se:SvgParameter>
+              <se:SvgParameter name="fill-opacity">0.62</se:SvgParameter>
+            </se:Fill>
+          </se:PolygonSymbolizer>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>huvudmagasin</se:Name>
+          <se:Description>
+            <se:Title>huvudmagasin</se:Title>
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%huvudmag%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
+          </ogc:Filter>
+          <se:LineSymbolizer>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#00aa00</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">1.2</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
+              <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
+            </se:Stroke>
+          </se:LineSymbolizer>
+          <se:PolygonSymbolizer>
+            <se:Fill>
+              <se:SvgParameter name="fill">#005ea6</se:SvgParameter>
+              <se:SvgParameter name="fill-opacity">0.62</se:SvgParameter>
+            </se:Fill>
+          </se:PolygonSymbolizer>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>annat magasin</se:Name>
+          <se:Description>
+            <se:Title>annat magasin</se:Title>
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+            <ogc:And>
+              <ogc:Not>
+                <ogc:PropertyIsNull>
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:PropertyIsNull>
+              </ogc:Not>
+              <ogc:PropertyIsLike wildCard="%" singleChar="?" escapeChar="!">
+                <ogc:Function name="lower">
+                  <ogc:PropertyName>typ</ogc:PropertyName>
+                </ogc:Function>
+                <ogc:Literal>%annat%</ogc:Literal>
+              </ogc:PropertyIsLike>
+            </ogc:And>
+          </ogc:Filter>
+          <se:LineSymbolizer>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#00aa00</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">1</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
+              <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
+              <se:SvgParameter name="stroke-dasharray">1 2</se:SvgParameter>
+            </se:Stroke>
+          </se:LineSymbolizer>
+          <se:PolygonSymbolizer>
+            <se:Fill>
+              <se:SvgParameter name="fill">#a6cee3</se:SvgParameter>
+              <se:SvgParameter name="fill-opacity">0.53</se:SvgParameter>
+            </se:Fill>
+          </se:PolygonSymbolizer>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>ospecificerat grundvattenmagasin</se:Name>
+          <se:Description>
+            <se:Title>ospecificerat grundvattenmagasin</se:Title>
+          </se:Description>
+          <!--Parser Error: syntax error, unexpected ELSE - Expression was:  "typ" is not null AND ELSE-->
+          <se:LineSymbolizer>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#9c00aa</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">1</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
+              <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
+            </se:Stroke>
+          </se:LineSymbolizer>
+          <se:PolygonSymbolizer>
+            <se:Fill>
+              <se:SvgParameter name="fill">#a6cee3</se:SvgParameter>
+              <se:SvgParameter name="fill-opacity">0.53</se:SvgParameter>
+            </se:Fill>
+          </se:PolygonSymbolizer>
         </se:Rule>
       </se:FeatureTypeStyle>
     </UserStyle>

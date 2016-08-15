@@ -1,11 +1,12 @@
 ﻿# -*- coding: utf-8 -*- This line is just for your information, the python plugin will not use the first line
 insert into  "zz_gvflode"("typ","beskrivning") values ('huvudmag','grundvattenflöde i huvudmagasinet');
-insert into  "zz_gvflode"("typ","beskrivning") values ('jordlager','grundvattenflöde i jordlager som inte ar huvudmagasinet');
+insert into  "zz_gvflode"("typ","beskrivning") values ('jordlager','grundvattenflöde i jordlager som inte är huvudmagasinet');
 insert into  "zz_gvflode"("typ","beskrivning") values ('ytliga jordlager','grundvattenflöde  i ytliga jordlager');
 insert into  "zz_gvflode"("typ","beskrivning") values ('berg','grundvattenflöde i berggrunden');
 insert into  "zz_gvflode"("typ","beskrivning") values ('ospec','ospecificierat grundvattenflöde');
 insert into  "zz_gvdel"("typ","beskrivning") values ('fast','fast vattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('rörlig','rörlig vattendelare');
+insert into  "zz_gvdel"("typ","beskrivning") values ('annan gräns','annan hydraulisk gräns');
 insert into  "zz_gvmag"("typ","beskrivning") values ('centralt','central del av huvudmagasinet');
 insert into  "zz_gvmag"("typ","beskrivning") values ('huvudmag','huvudmagasinet');
 insert into  "zz_gvmag"("typ","beskrivning") values ('sidomag','sidomagasin');

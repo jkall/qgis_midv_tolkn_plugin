@@ -26,10 +26,17 @@ from qgis.gui import *
 import qgis.utils
 import os
 import locale
+import collections
 import midv_tolkn_utils as utils
 
 def default_layers(): # dictionary of layers with corresponding data domains
-    return {'gvmag':'zz_gvmag', 'gvflode':'zz_gvflode', 'gvdel':'zz_gvdel', 'tillromr':'zz_tillromr'} 
+    #return {'gvmag':'zz_gvmag', 'gvflode':'zz_gvflode', 'gvdel':'zz_gvdel', 'tillromr':'zz_tillromr'}
+    d = collections.OrderedDict()
+    d['gvmag']='zz_gvmag'
+    d['gvflode']='zz_gvflode'
+    d['gvdel']='zz_gvdel'
+    d['tillromr']='zz_tillromr'
+    return d
 
 def relations(): #tuple of relation_names and relation_ids
     return (('gvmag_relation',u'gvmag_relation_id'),(u'gvdel_relation',u'gvdel_relation_id'),(u'gvflode_relation',u'gvflode_relation_id'),(u'tillromr_relation',u'tillromr_relation_id'))
@@ -206,7 +213,7 @@ class LoadLayers():
         try:
             remove_group = self.root.findGroup(self.group_name)
             self.root.removeChildNode(remove_group)
-            qgis.utils.iface.messageBar().pushMessage("Information","""Removed old group 'Midvatten_TolkningsDB with associated layers""",1,duration=10)
+            qgis.utils.iface.messageBar().pushMessage("Information","""Removed any old group 'Midvatten_TolkningsDB with associated layers""",1,duration=10)
         except:
             print('could not remove layers, probably not existing')
             

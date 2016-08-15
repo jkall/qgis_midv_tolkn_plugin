@@ -8,7 +8,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="typ">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvflode20160730184322019" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvflode20160815082749737" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="ursprung">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -17,7 +17,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="intermag">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160730184322035" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160815082749774" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="updated">
       <widgetv2config IsMultiline="0" fieldEditable="0" UseHtml="0" labelOnTop="0"/>
@@ -29,7 +29,8 @@
       <rule filter="lower(&quot;typ&quot;)  like '%jordlager%'" key="{2bbcd2f1-34ba-4797-b014-215001821a94}" symbol="1" label="gvflöde i jordlager som inte är huvudmagasinet"/>
       <rule filter="lower(&quot;typ&quot;)  like '%berg%'" key="{726f614a-8d68-46e7-b088-bd925e9891c1}" symbol="2" label="gvflöde i berggrunden"/>
       <rule filter="lower( &quot;typ&quot; ) like '%ytlig%'" key="{20ed1c82-cc1d-4817-b2c2-9892d4cc896f}" symbol="3" label="gvflöde i ytliga jordlager"/>
-      <rule filter="lower( &quot;intermag&quot; ) like '%huvudmag%'" key="{1aa27444-7ef8-4874-9866-6f626fa96d84}" symbol="4" label="utbyte med huvudmagasinet"/>
+      <rule filter="lower( &quot;intermag&quot; ) like '%huvudmag%'" key="{d6dd86af-393b-488f-a733-90cf63a82bd0}" symbol="4" label="utbyte med huvudmagasinet"/>
+      <rule filter="&quot;intermag&quot; is not null and lower( &quot;intermag&quot; ) not like '%huvudmag%'" key="{1aa27444-7ef8-4874-9866-6f626fa96d84}" symbol="5" label="utbyte med annat magasin"/>
     </rules>
     <symbols>
       <symbol alpha="1" clip_to_extent="1" type="line" name="0">
@@ -245,14 +246,33 @@
         </layer>
       </symbol>
       <symbol alpha="1" clip_to_extent="1" type="line" name="4">
-        <layer pass="0" class="SimpleLine" locked="1">
+        <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="0"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="227,26,28,255"/>
+          <prop k="line_color" v="237,0,0,255"/>
+          <prop k="line_style" v="dot"/>
+          <prop k="line_width" v="1"/>
+          <prop k="line_width_unit" v="MM"/>
+          <prop k="offset" v="0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+        </layer>
+      </symbol>
+      <symbol alpha="1" clip_to_extent="1" type="line" name="5">
+        <layer pass="0" class="SimpleLine" locked="0">
+          <prop k="capstyle" v="square"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="customdash_unit" v="MM"/>
+          <prop k="draw_inside_polygon" v="0"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="line_color" v="219,113,0,255"/>
           <prop k="line_style" v="dot"/>
           <prop k="line_width" v="1"/>
           <prop k="line_width_unit" v="MM"/>
@@ -433,7 +453,7 @@
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerTransparency>0</layerTransparency>
-  <displayfield>id</displayfield>
+  <displayfield>namn</displayfield>
   <label>0</label>
   <labelattributes>
     <label fieldname="" text="Label"/>
@@ -456,7 +476,7 @@
     <selectedonly on=""/>
   </labelattributes>
   <SingleCategoryDiagramRenderer diagramType="Pie">
-    <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="0">
+    <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="-4.65661e-10">
       <fontProperties description="Noto Sans,9,-1,5,50,0,0,0,0,0" style=""/>
       <attribute field="" color="#000000" label=""/>
     </DiagramCategory>

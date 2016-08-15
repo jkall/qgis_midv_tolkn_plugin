@@ -189,7 +189,22 @@
           </ogc:Filter>
           <se:LineSymbolizer>
             <se:Stroke>
-              <se:SvgParameter name="stroke">#e31a1c</se:SvgParameter>
+              <se:SvgParameter name="stroke">#ed0000</se:SvgParameter>
+              <se:SvgParameter name="stroke-width">1</se:SvgParameter>
+              <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
+              <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
+              <se:SvgParameter name="stroke-dasharray">1 2</se:SvgParameter>
+            </se:Stroke>
+          </se:LineSymbolizer>
+        </se:Rule>
+        <se:Rule>
+          <se:Name>utbyte med annat magasin</se:Name>
+          <se:Description>
+            <se:Title>utbyte med annat magasin</se:Title>
+          </se:Description>
+          <se:LineSymbolizer>
+            <se:Stroke>
+              <se:SvgParameter name="stroke">#db7100</se:SvgParameter>
               <se:SvgParameter name="stroke-width">1</se:SvgParameter>
               <se:SvgParameter name="stroke-linejoin">bevel</se:SvgParameter>
               <se:SvgParameter name="stroke-linecap">square</se:SvgParameter>
