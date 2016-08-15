@@ -190,6 +190,8 @@ class AddLayerStyles():
             content = content_file.read()
         self.cur.execute("update layer_styles set styleQML=? where f_table_name=?",(content.decode('utf-8'),layer))#Use parameterized arguments to allow sqlite3 to escape the quotes for you. (It also helps prevent SQL injection.
         #"UPDATE posts SET html = ? WHERE id = ?", (html ,temp[i][1])
+        """
         with open(os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",sld_file), 'r') as content_file:
             content = content_file.read()
         self.cur.execute("update layer_styles set styleSLD=? where f_table_name=?",(content.decode('utf-8'),layer))#Use parameterized arguments to allow sqlite3 to escape the quotes for you. (It also helps prevent SQL injection.
+        """
