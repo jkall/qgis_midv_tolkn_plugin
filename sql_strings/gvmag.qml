@@ -8,7 +8,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="typ">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160815104937458" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160815105703615" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="ursprung">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -23,19 +23,17 @@
   <renderer-v2 forceraster="0" symbollevels="0" type="RuleRenderer" enableorderby="0">
     <rules key="{b48037d2-b3fe-45c3-bff0-74ccb9bf0713}">
       <rule filter=" &quot;typ&quot; is not null" key="{1d7719fa-9088-4e0a-a38f-ed88e6952138}" symbol="0" label="Symbolik 1 - yttre linje">
-        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%' or  lower(&quot;typ&quot;)  like  '%central%'" key="{2b7ecef8-9eb8-425c-a538-df2efd653086}" symbol="1" label="huvudmagasin">
-          <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{817d207b-7acd-4997-a85d-e3f7dd701dfe}" symbol="2" label="huvudmagasinets centrala delar"/>
-        </rule>
+        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{2b7ecef8-9eb8-425c-a538-df2efd653086}" symbol="1" label="huvudmagasin"/>
+        <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{d674f409-e9cd-46b1-8b3c-0ace12b517af}" symbol="2" label="huvudmagasinets centrala delar"/>
         <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{61292958-cca7-4d2c-94e1-6f04e45b69a4}" symbol="3" label="magasin i jordlager, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{5390ff5f-d929-4237-9de8-fa96e521cbd4}" symbol="4" label="magasin i ytliga jordlager, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{fa82f944-9edc-438a-b876-7b4afba0286f}" symbol="5" label="magasin i berggrunden, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{fdd1e883-3a4f-49a6-af80-b9c14e5611c3}" symbol="6" label="annat magasin, t.ex. ytvatten"/>
         <rule filter="ELSE" key="{208c906d-5096-4561-8b8c-827315446fe5}" symbol="7" label="ospecificerat grundvattenmagasin"/>
       </rule>
-      <rule checkstate="0" filter=" &quot;typ&quot; is not null" key="{83c47323-2d40-439c-a86d-9835a7358263}" symbol="8" label="Symbolik 2 - fyllda polygoner">
-        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%' or  lower(&quot;typ&quot;)  like  '%central%'" key="{81e6932f-1111-4b8e-94d3-ed96a33a0443}" symbol="9" label="huvudmagasin">
-          <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{4e4ba3fa-88eb-4b85-a59f-4854349adba6}" symbol="10" label="huvudmagasinets centrala delar"/>
-        </rule>
+      <rule filter=" &quot;typ&quot; is not null" key="{83c47323-2d40-439c-a86d-9835a7358263}" symbol="8" label="Symbolik 2 - fyllda polygoner">
+        <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{81e6932f-1111-4b8e-94d3-ed96a33a0443}" symbol="9" label="huvudmagasin"/>
+        <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{0117775e-f793-458e-a5a5-36163129b720}" symbol="10" label="huvudmagasinets centrala delar"/>
         <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{48fae3b1-c145-4f19-b0c7-69fd8723b0a0}" symbol="11" label="magasin i jordlager, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{bf015d45-723d-449c-90d0-c74d8a9c5607}" symbol="12" label="magasin i ytliga jordlager, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{2fe2d829-cd7f-47fe-a582-52eb301a20f4}" symbol="13" label="magasin i berggrunden, som ej är huvudmag"/>
