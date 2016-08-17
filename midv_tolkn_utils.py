@@ -46,10 +46,7 @@ import re
 
 class dbconnection(): # in use
     def __init__(self, db=''):
-        if db == '':
-            self.dbpath = QgsProject.instance().readEntry("Midvatten","database")[0]
-        else:
-            self.dbpath = db
+        self.dbpath = db
     
     def connect2db(self):
         if os.path.exists(self.dbpath):
@@ -58,10 +55,10 @@ class dbconnection(): # in use
                 self.conn.cursor().execute("select count(*) from sqlite_master") 
                 ConnectionOK = True
             except:
-                pop_up_info("Could not connect to  " + self.dbpath + "\nYou will have to reset Midvatten settings for this project!")
+                pop_up_info("Could not connect to %s"%str(self.dbpath))
                 ConnectionOK = False
         else:
-            pop_up_info("The file " + self.dbpath + " do not exist.\nYou will have to reset Midvatten settings for this project!")
+            pop_up_info("The file %s do not exist!"%str(self.dbpath))
             ConnectionOK = False
         return ConnectionOK
         

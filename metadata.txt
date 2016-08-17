@@ -3,7 +3,7 @@
 name=midv_tolkn
 qgisMinimumVersion=2.14
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.2.3
+version=Version 0.2.8
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
@@ -18,14 +18,12 @@ experimental=True
 deprecated=False
 
 changelog=
-        Version 0.2.3
-        - triggers for tillromr
-        Version 0.2.2
-        - styles
+        Version 0.2.8
+        - ui changes
+        Version 0.2.7 - 0.2.2
+        - various fixes for styles and tillromr triggers
         Version 0.2.1
-        - data domain updates
-        Version 0.2.1
-        - minor fixes
+        - data domain updates, minor fixes
         Version 0.2
         - fixed value relation bug
         Version 0.1

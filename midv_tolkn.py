@@ -188,27 +188,29 @@ class midv_tolkn:
         
     def zip_db(self):
         force_another_db = False
+        dbpath=None
         if self.db:
-            use_current_db = utils.askuser("YesNo","""Vill du göra backup av %s?"""%str(db),'Which database?')
+            use_current_db = utils.askuser("YesNo",u'Vill du göra backup av %s?'%str(self.db),'Which database?')
             if use_current_db.result == 1:
                 dbpath = self.db
-                force_another_db = True
+                force_another_db = False
             elif use_current_db.result == 0:
                 force_another_db = True
             elif use_current_db.result == '':
                 return
         if not self.db or force_another_db:
-            dbpath = QFileDialog.getOpenFileName(None, 'Ange db som ska göras backup utav','',"Spatialite (*.sqlite)")
+            dbpath = QFileDialog.getOpenFileName(None, u'Ange db som du vill skapa backup utav','',"Spatialite (*.sqlite)")
 
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-        connection = utils.dbconnection(dbpath)
-        connection.connect2db()
-        connection.conn.cursor().execute("begin immediate")
-        bkupname = dbpath + datetime.datetime.now().strftime('%Y%m%dT%H%M') + '.zip'
-        zf = zipfile.ZipFile(bkupname, mode='w')
-        zf.write(dbpath, compress_type=compression) #compression will depend on if zlib is found or not
-        zf.close()
-        connection.conn.rollback()
-        connection.closedb()
-        self.iface.messageBar().pushMessage("Information","Database backup was written to " + bkupname, 1,duration=15)
-        QApplication.restoreOverrideCursor()
+        if dbpath:
+            QApplication.setOverrideCursor(Qt.WaitCursor)
+            connection = utils.dbconnection(dbpath)
+            connection.connect2db()
+            connection.conn.cursor().execute("begin immediate")
+            bkupname = dbpath + datetime.datetime.now().strftime('%Y%m%dT%H%M') + '.zip'
+            zf = zipfile.ZipFile(bkupname, mode='w')
+            zf.write(dbpath, compress_type=compression) #compression will depend on if zlib is found or not
+            zf.close()
+            connection.conn.rollback()
+            connection.closedb()
+            self.iface.messageBar().pushMessage("Information","Database backup was written to " + bkupname, 1,duration=15)
+            QApplication.restoreOverrideCursor()
