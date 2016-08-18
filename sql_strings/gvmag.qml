@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.14.4-Essen" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="1" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.14.5-Essen" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="1" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <edittypes>
     <edittype widgetv2type="TextEdit" name="pkuid">
       <widgetv2config IsMultiline="0" fieldEditable="0" UseHtml="0" labelOnTop="0"/>
@@ -8,7 +8,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="typ">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160815154608464" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_gvmag20160817090500979" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="ursprung">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -31,14 +31,14 @@
         <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{b6b1a618-06ac-49cf-a3f5-c24fe69b993b}" symbol="6" label="annat magasin, t.ex. ytvatten"/>
         <rule filter="ELSE" key="{1d77a79a-49a9-40ea-a235-f0512a602b1d}" symbol="7" label="ospecificerat grundvattenmagasin"/>
       </rule>
-      <rule checkstate="0" filter=" &quot;typ&quot; is not null" key="{1d7719fa-9088-4e0a-a38f-ed88e6952138}" symbol="8" label="Symbolik 2 - linjefill">
+      <rule filter=" &quot;typ&quot; is not null" key="{1d7719fa-9088-4e0a-a38f-ed88e6952138}" symbol="8" label="Symbolik 2 - linjefill">
         <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{2b7ecef8-9eb8-425c-a538-df2efd653086}" symbol="9" label="huvudmagasin"/>
         <rule filter=" lower(&quot;typ&quot;)  like  '%central%'" key="{a6c485af-c3bc-459c-a811-5dbaff3cc65a}" symbol="10" label="huvudmagasinets centrala delar"/>
         <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{61292958-cca7-4d2c-94e1-6f04e45b69a4}" symbol="11" label="magasin i jordlager, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{0cb097c3-ad38-4c8f-a5b4-06472c055831}" symbol="12" label="magasin i ytliga jordlager, som ej är huvudmag"/>
-        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{fa82f944-9edc-438a-b876-7b4afba0286f}" symbol="13" label="magasin i berggrunden, som ej är huvudmag"/>
+        <rule checkstate="0" filter="lower(&quot;typ&quot;) like '%berg%'" key="{fa82f944-9edc-438a-b876-7b4afba0286f}" symbol="13" label="magasin i berggrunden, som ej är huvudmag"/>
         <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{fdd1e883-3a4f-49a6-af80-b9c14e5611c3}" symbol="14" label="annat magasin, t.ex. ytvatten"/>
-        <rule filter="ELSE" key="{208c906d-5096-4561-8b8c-827315446fe5}" symbol="15" label="ospecificerat grundvattenmagasin"/>
+        <rule checkstate="0" filter="ELSE" key="{208c906d-5096-4561-8b8c-827315446fe5}" symbol="15" label="ospecificerat grundvattenmagasin"/>
       </rule>
       <rule checkstate="0" filter=" &quot;typ&quot; is not null" key="{83c47323-2d40-439c-a86d-9835a7358263}" symbol="16" label="Symbolik 3 - fyllda polygoner">
         <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{81e6932f-1111-4b8e-94d3-ed96a33a0443}" symbol="17" label="huvudmagasin"/>
@@ -144,7 +144,7 @@
               <prop k="joinstyle" v="bevel"/>
               <prop k="line_color" v="36,129,29,255"/>
               <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.5"/>
+              <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
               <prop k="offset" v="0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -178,7 +178,7 @@
               <prop k="joinstyle" v="bevel"/>
               <prop k="line_color" v="36,129,29,255"/>
               <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.5"/>
+              <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
               <prop k="offset" v="0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -248,7 +248,7 @@
               <prop k="joinstyle" v="bevel"/>
               <prop k="line_color" v="0,255,0,255"/>
               <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.5"/>
+              <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
               <prop k="offset" v="0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -318,7 +318,7 @@
               <prop k="joinstyle" v="bevel"/>
               <prop k="line_color" v="0,255,180,255"/>
               <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.5"/>
+              <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
               <prop k="offset" v="0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
@@ -694,7 +694,7 @@
               <prop k="joinstyle" v="bevel"/>
               <prop k="line_color" v="36,129,29,255"/>
               <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.5"/>
+              <prop k="line_width" v="0.26"/>
               <prop k="line_width_unit" v="MM"/>
               <prop k="offset" v="0"/>
               <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
