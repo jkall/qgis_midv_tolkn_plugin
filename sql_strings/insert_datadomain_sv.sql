@@ -17,5 +17,9 @@ insert into  "zz_gvmag"("typ","beskrivning") values ('ospec','ospecificierat');
 insert into  "zz_tillromr"("typ","beskrivning") values ('a','typ a - hela gvbildn infiltrerar direkt till magasinet');
 insert into  "zz_tillromr"("typ","beskrivning") values ('b','typ b - hela gvbildn når magasinet via något annat magasin');
 insert into  "zz_tillromr"("typ","beskrivning") values ('c','typ c - delar av gvbildn når magasinet');
-
+insert into  "zz_strukturlinje"("typ","beskrivning") values ('spröd','spröd deformationszon');
+insert into  "zz_strukturlinje"("typ","beskrivning") values ('plastisk','plastisk deformtionszon');
+insert into  "zz_strukturlinje"("typ","beskrivning") values ('strukturell','strukturell formlinje');
+insert into  "zz_strukturlinje"("typ","beskrivning") values ('kontakt','litologisk kontakt');
+insert into  "zz_strukturlinje"("typ","beskrivning") values ('ospec','ospecificerad strukturlinje');
 

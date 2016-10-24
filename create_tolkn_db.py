@@ -170,6 +170,14 @@ class AddLayerStyles():
             self.style_from_file_into_db('tillromr', 'tillromr.qml','tillromr.sld')
         except:
             pass
+        try:
+            self.style_from_file_into_db('sprickzon', 'sprickzon.qml','sprickzon.sld')
+        except:
+            pass
+        try:
+            self.style_from_file_into_db('strukturlinje', 'strukturlinje.qml','strukturlinje.sld')
+        except:
+            pass
         self.cur.execute("PRAGMA foreign_keys = OFF")
         #FINISHED WORKING WITH THE DATABASE, CLOSE CONNECTIONS
         self.rs.close()

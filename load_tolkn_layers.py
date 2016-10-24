@@ -32,6 +32,8 @@ import midv_tolkn_utils as utils
 def default_layers(): # dictionary of layers with corresponding data domains
     #return {'gvmag':'zz_gvmag', 'gvflode':'zz_gvflode', 'gvdel':'zz_gvdel', 'tillromr':'zz_tillromr'}
     d = collections.OrderedDict()
+    d['sprickzon']=None
+    d['strukturlinje']='zz_strukturlinje'
     d['gvmag']='zz_gvmag'
     d['gvflode']='zz_gvflode'
     d['gvdel']='zz_gvdel'
@@ -39,7 +41,7 @@ def default_layers(): # dictionary of layers with corresponding data domains
     return d
 
 def relations(): #tuple of relation_names and relation_ids
-    return (('gvmag_relation',u'gvmag_relation_id'),(u'gvdel_relation',u'gvdel_relation_id'),(u'gvflode_relation',u'gvflode_relation_id'),(u'tillromr_relation',u'tillromr_relation_id'))
+    return (('gvmag_relation',u'gvmag_relation_id'),(u'gvdel_relation',u'gvdel_relation_id'),(u'gvflode_relation',u'gvflode_relation_id'),(u'tillromr_relation',u'tillromr_relation_id'),(u'strukturlinje_relation',u'strukturlinje_relation_id'))
 
 class LoadLayers():        
     def __init__(self, iface,db,group_name='Midvatten_TolkningsDB'):
@@ -126,7 +128,7 @@ class LoadLayers():
         # fix value relations
         for lyr in layers.keys():
             #print(lyr)
-            if lyr in layer_name_list:
+            if lyr in layer_name_list and not layers[lyr]==None:
                 #print('...is in layer_list')
                 self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], 2, 'typ','beskrivning')
 
