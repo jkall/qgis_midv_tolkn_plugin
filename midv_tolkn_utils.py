@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- This is the place to store some global (for the Midvatten plugin) utility functions. 
- NOTE - if using this file, it has to be imported by midvatten.py
+ This is the place to store some global (for the Midvatten tolkning plugin) utility functions. 
+ NOTE - if using this file, it has to be imported by midv_tolkn.py
                              -------------------
-        begin                : 2011-10-18
+        begin                : 2016
         copyright            : (C) 2011 by joskal
         email                : groundwatergis [at] gmail.com
  ***************************************************************************/
@@ -43,6 +43,7 @@ import time
 from collections import OrderedDict
 import re
 
+import midv_tolkn_defs as defs
 
 class dbconnection(): # in use
     def __init__(self, db=''):
@@ -64,7 +65,6 @@ class dbconnection(): # in use
         
     def closedb(self):
             self.conn.close()
-
 
 class askuser(QtGui.QDialog): # in use
     def __init__(self, question="YesNo", msg = '', dialogtitle='User input needed', parent=None):
@@ -107,12 +107,125 @@ class askuser(QtGui.QDialog): # in use
                     else:
                         pop_up_info("Failure:\nMust write time resolution also.\n")
 
+class MessagebarAndLog():
+    """ Class that sends logmessages to messageBar and or to QgsMessageLog
+
+    Usage: MessagebarAndLog.info(bar_msg='a', log_msg='b', duration=10,
+    messagebar_level=QgsMessageBar.INFO, log_level=QgsMessageLog.INFO,
+    button=True)
+
+    :param bar_msg: A short msg displayed in messagebar and log.
+    :param log_msg: A long msg displayed only in log.
+    :param messagebar_level: The message level of the messageBar.
+    :param log_level: The message level of the QgsMessageLog  { INFO = 0, WARNING = 1, CRITICAL = 2 }.
+    :param duration: The duration of the messageBar.
+    :param button: (True/False, default True) If False, the button to the
+                   QgsMessageLog does not appear at the messageBar.
+
+    :return:
+
+    The message bar_msg is written to both messageBar and QgsMessageLog
+    The log_msg is only written to QgsMessageLog
+
+    * If the user only supplies bar_msg, a messageBar popup appears without button to message log.
+    * If the user supplies only log_msg, the message is only written to message log.
+    * If the user supplies both, a messageBar with bar_msg appears with a button to open message log.
+      In the message log, the bar_msg and log_msg is written.
+    """
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def log(bar_msg=None, log_msg=None, duration=10, messagebar_level=QgsMessageBar.INFO, log_level=QgsMessageLog.INFO, button=True):
+        if bar_msg is not None:
+            widget = qgis.utils.iface.messageBar().createMessage(returnunicode(bar_msg))
+            log_button = QtGui.QPushButton(u"View message log", pressed=show_message_log)
+            if log_msg is not None and button:
+                widget.layout().addWidget(log_button)
+            qgis.utils.iface.messageBar().pushWidget(widget, level=messagebar_level, duration=duration)
+        QgsMessageLog.logMessage(returnunicode(bar_msg), u'Midv_tolkn', level=log_level)
+        if log_msg is not None:
+            QgsMessageLog.logMessage(returnunicode(log_msg), u'Midv_tolkn', level=log_level)
+
+    @staticmethod
+    def info(bar_msg=None, log_msg=None, duration=10, button=True):
+        MessagebarAndLog.log(bar_msg, log_msg, duration, QgsMessageBar.INFO, QgsMessageLog.INFO, button)
+
+    @staticmethod
+    def warning(bar_msg=None, log_msg=None, duration=10, button=True):
+        MessagebarAndLog.log(bar_msg, log_msg, duration, QgsMessageBar.WARNING, QgsMessageLog.WARNING, button)
+
+    @staticmethod
+    def critical(bar_msg=None, log_msg=None, duration=10, button=True):
+        MessagebarAndLog.log(bar_msg, log_msg, duration, QgsMessageBar.CRITICAL, QgsMessageLog.CRITICAL, button)
+
+class UpgradeDatabase():#in use
+    """
+    Observera att denna uppgraderingsfunktion inte är särskilt intelligent...
+    DATA_DOMÄNER:
+        Den utgår från GAMLA zz_tabeller och försöker kopiera till likadana zz_tabeller i nya databasen, med kolumn-namn enligt gamla databas-formatet
+    ÖVRIGA_TABELLER:
+        Den utgår från NYA databas-formatet och letar efter tabeller i gamla databasen som har samma namn och sedan försöker den kopiera innehållet i de kolumner som ska finnas i nya databasen
+    """
+    def __init__(self,from_db,to_db,EPSG_code):
+        self.export_2_splite(from_db,to_db, EPSG_code)
+        
+    def export_2_splite(self,source_db,target_db, EPSG_code):
+        """
+        Exports a datagbase to a new spatialite database file
+        :param target_db: The name of the new database file
+        :param source_db: The name of the source database file
+        :param EPSG_code:
+        :return:
+
+        """
+        conn = sqlite.connect(target_db,detect_types=sqlite.PARSE_DECLTYPES|sqlite.PARSE_COLNAMES)
+        self.curs = conn.cursor()
+        self.curs.execute("PRAGMA foreign_keys = ON")
+        self.curs.execute(r"""ATTACH DATABASE '%s' AS a"""%source_db)
+        conn.commit()#commit sql statements so far
+
+        # first transfer data from data domains (beginning with zz_ in the database)
+        dd_tables = self.curs.execute("select name from sqlite_master where name like 'zz_%'")
+        d_domain_tables = [str(dd_table[0]) for dd_table in dd_tables]
+        for tablename in d_domain_tables:
+            self.to_sql(tablename)
+        conn.commit()
+
+        #ordered dictionary of layers with (some) data domains
+        layers_dict = defs.default_layers()
+        for tablename in layers_dict.keys():
+            self.to_sql(tablename)
+        conn.commit()
+
+        self.curs.execute(r"""DETACH DATABASE a""")
+        self.curs.execute('vacuum')
+
+        MessagebarAndLog.info("Export done! Layers from the new database will be loaded to your qgis project")
+
+        conn.commit()
+        conn.close()
+
+    def to_sql(self, tname):
+        columns_list = self.curs.execute("""PRAGMA table_info(%s)"""%tname).fetchall()
+        column_names = ', '.join([col[1] for col in columns_list]) #Load column names from sqlite table
+
+        sql = r"insert or ignore into %s select %s from a.%s" %(tname, column_names, tname)
+        try:
+            self.curs.execute(sql)
+        except Exception, e:
+            MessagebarAndLog.critical("Export warning: sql failed. See message log.", sql + "\nmsg: " + str(e))
+
 def find_layer(layer_name): # in use 
     for name, search_layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
         if search_layer.name() == layer_name:
             return search_layer
 
     return None
+
+def getcurrentlocale():
+    current_locale = QgsProject.instance().readEntry("Midvatten", "locale")[0]
+    return current_locale
 
 def pop_up_info(msg='',title='Information',parent=None):#in use
     """Display an info message via Qt box"""
@@ -183,6 +296,15 @@ def returnunicode(anything, keep_containers=False): #takes an input and tries to
             text = unicode('data type unknown, check database')
     return text
 
+def show_message_log(pop_error=False):
+    """
+    Source: qgis code
+     """
+    if pop_error:
+        qgis.utils.iface.messageBar().popWidget()
+
+    qgis.utils.iface.openMessageLog()
+
 def sql_load_fr_db(sql='', dbpath=''):#in use
     if os.path.exists(dbpath):
         try:
@@ -229,6 +351,7 @@ def sql_alter_db(dbpath,sql=''):#in use
 
     return result
 
-def getcurrentlocale():
-    current_locale = QgsProject.instance().readEntry("Midvatten", "locale")[0]
-    return current_locale
+def write_qgs_log_to_file(message, tag, level):
+    logfile = QgsLogger.logFile()
+    if logfile is not None:
+        QgsLogger.logMessageToFile(u'{}: {}({}): {} '.format(u'%s'%(returnunicode(get_date_time())), returnunicode(tag), returnunicode(level), u'%s'%(returnunicode(message))))

@@ -28,20 +28,13 @@ import os
 import locale
 import collections
 import midv_tolkn_utils as utils
+import midv_tolkn_defs as defs
 
-def default_layers(): # dictionary of layers with corresponding data domains
-    #return {'gvmag':'zz_gvmag', 'gvflode':'zz_gvflode', 'gvdel':'zz_gvdel', 'tillromr':'zz_tillromr'}
-    d = collections.OrderedDict()
-    d['sprickzon']=None
-    d['strukturlinje']='zz_strukturlinje'
-    d['gvmag']='zz_gvmag'
-    d['gvflode']='zz_gvflode'
-    d['gvdel']='zz_gvdel'
-    d['tillromr']='zz_tillromr'
-    return d
+def default_layers(): # dictionary of layers with (some) corresponding data domains
+    return defs.default_layers()
 
-def relations(): #tuple of relation_names and relation_ids
-    return (('gvmag_relation',u'gvmag_relation_id'),(u'gvdel_relation',u'gvdel_relation_id'),(u'gvflode_relation',u'gvflode_relation_id'),(u'tillromr_relation',u'tillromr_relation_id'),(u'strukturlinje_relation',u'strukturlinje_relation_id'))
+def relations(): #CURRENTLY NOT IN USE tuple of relation_names and relation_ids
+    return defs.relations()
 
 class LoadLayers():        
     def __init__(self, iface,db,group_name='Midvatten_TolkningsDB'):
@@ -77,11 +70,12 @@ class LoadLayers():
         else:
             position_index = 0
         MyGroup = self.root.insertGroup(position_index, self.group_name)
+        MySubGroup = MyGroup.addGroup(u'värdeförråd')
         uri = QgsDataSourceURI()
         uri.setDatabase(self.dbpath)
         canvas = self.iface.mapCanvas()
         layer_list = []
-        layer_name_list = []
+        layer_name_list = [] 
         layer_dict = dict() # name as key and layer as value
 
         # first add all data domains (beginning with zz_ in the database)
@@ -96,49 +90,56 @@ class LoadLayers():
             layer_name_list.append(layer.name())
 
         #then load all spatial layers
-        layers = default_layers()
-        for tablename in layers.keys(): 
-            uri.setDataSource('',tablename,'geometry')
-            layer = QgsVectorLayer(uri.uri(), tablename, 'spatialite') # Adding the layer as 'spatialite' instead of ogr vector layer is preferred
-            layer_list.append(layer)
-            layer_name_list.append(layer.name())
-        
+        layers = default_layers()  # ordered dict with layer-name:zz_layer-name
+        for tablename in layers.keys():
+            try:
+                uri.setDataSource('',tablename,'geometry')
+                layer = QgsVectorLayer(uri.uri(), tablename, 'spatialite') # Adding the layer as 'spatialite' instead of ogr vector layer is preferred
+                if layer.isValid():
+                    layer_list.append(layer)
+                    layer_name_list.append(layer.name())
+                else:
+                    qgis.utils.iface.messageBar().pushMessage("Warning","Table %s not found in db. DB probably created w old plugin version."%str(tablename), 1,duration=5)
+            except:
+                qgis.utils.iface.messageBar().pushMessage("Warning","Table %s not found in db. DB probably created w old plugin version."%str(tablename), 1,duration=5)
         #now loop over all the layers and set styles etc
         for layer in layer_list:
-            if not layer.isValid():
-                utils.pop_up_info(layer.name() + ' is not valid layer')
-                print(layer.name() + ' is not valid layer')
-                pass
+            QgsMapLayerRegistry.instance().addMapLayers([layer],False)
+            if layer.name() in d_domain_tables:
+                MySubGroup.insertLayer(0,layer)
             else:
-                QgsMapLayerRegistry.instance().addMapLayers([layer],False)
                 MyGroup.insertLayer(0,layer)
-                layer_dict[layer.name()] = layer
+            layer_dict[layer.name()] = layer
 
-                #now try to load the style file
-                stylefile = os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",layer.name() + ".qml")
-                try:
-                    layer.loadNamedStyle(stylefile)
-                except:
-                    pass
-                if layer.name() == 'gvmag':#zoom to gvmag extent
-                    canvas.setExtent(layer.extent())
-                else:
-                    pass
+            #now try to load the style file
+            stylefile = os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",layer.name() + ".qml")
+            try:
+                layer.loadNamedStyle(stylefile)
+            except:
+                pass
+            if layer.name() == 'gvmag':#zoom to gvmag extent
+                canvas.setExtent(layer.extent())
+            else:
+                pass
+
+        MySubGroup.setExpanded(False)
 
         # fix value relations
         for lyr in layers.keys():
-            #print(lyr)
-            if lyr in layer_name_list and not layers[lyr]==None:
-                #print('...is in layer_list')
-                self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], 2, 'typ','beskrivning')
+            if lyr in layer_name_list:
+                if not layers[lyr]==None:
+                    self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], layer_dict[lyr].dataProvider().fieldNameIndex('typ'), 'typ','beskrivning')
 
+        # special for sarbarhet
+        self.create_layer_value_relations(layer_dict['sarbarhet'], layer_dict['zz_trptid'], layer_dict[lyr].dataProvider().fieldNameIndex('trptid_my_gvmag'), 'trptid_my_gvmag','beskrivning')
+        self.create_layer_value_relations(layer_dict['sarbarhet'], layer_dict['zz_omattad_zon'], layer_dict[lyr].dataProvider().fieldNameIndex('omattad_zon'), 'omattad_zon','beskrivning')
         #special for gvflode
-        self.create_layer_value_relations(layer_dict['gvflode'], layer_dict['zz_gvmag'], 5, 'typ','beskrivning')
-            
+        self.create_layer_value_relations(layer_dict['gvflode'], layer_dict['zz_gvmag'], layer_dict['gvflode'].dataProvider().fieldNameIndex('intermag'), 'typ','beskrivning')
+
         #finally refresh canvas
         canvas.refresh()
 
-    def create_relations(self):#THIS IS YET NOT WORKING AS EXPECTED, ONLY RANDOMLY CREATING BOTH RELATIONS!!!  ALSO, SOMETIMES QGIS CRASH WHEN OPENING FORMS
+    def create_relations(self):#CURRENTLY NOT IN USE (NOT WORKING AS EXPECTED, ONLY RANDOMLY CREATING BOTH RELATIONS!!!  ALSO, SOMETIMES QGIS CRASH WHEN OPENING FORMS)
         """
         1. create project relations obs_points-comments and obs_points-stratigraphy
         2. add 2 tabs to the obs_points form and fill those tabs with related layers comments and stratigraphy
@@ -194,8 +195,6 @@ class LoadLayers():
         """
 
     def create_layer_value_relations(self, the_layer, target_layer, index,key_field, value_field):#these are layer-specific value maps, not project relations
-        #print(the_layer.name(), target_layer.name(), str(index),key_field, value_field)
-        #print(target_layer.name())
         the_layer.editFormConfig().setWidgetType(index,"ValueRelation")
 
         cfg = dict()
@@ -203,7 +202,7 @@ class LoadLayers():
         cfg['Key'] = key_field
         cfg['Value'] = value_field
         cfg['AllowNull'] = True
-        cfg['OrderByValue'] = True
+        cfg['OrderByValue'] = False
         cfg['UseCompleter']= False
         cfg['AllowMulti']= False
         # Add more if you like

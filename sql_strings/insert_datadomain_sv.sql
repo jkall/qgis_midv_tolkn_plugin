@@ -7,12 +7,12 @@ insert into  "zz_gvflode"("typ","beskrivning") values ('ospec','ospecificierat g
 insert into  "zz_gvdel"("typ","beskrivning") values ('fast','fast vattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('rörlig','rörlig vattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('annan gräns','annan hydraulisk gräns');
-insert into  "zz_gvmag"("typ","beskrivning") values ('centralt','huvudmagasinets centrala delar');
 insert into  "zz_gvmag"("typ","beskrivning") values ('huvudmag','huvudmagasinet');
+insert into  "zz_gvmag"("typ","beskrivning") values ('centralt','central del av huvudmagasinet');
 insert into  "zz_gvmag"("typ","beskrivning") values ('jordlager','magasin i jordlager');
-insert into  "zz_gvmag"("typ","beskrivning") values ('annat','annat magasin, t.ex. ytvatten');
 insert into  "zz_gvmag"("typ","beskrivning") values ('ytliga jordlager','magasin i ytliga jordlager');
 insert into  "zz_gvmag"("typ","beskrivning") values ('berg','magasin i berggrunden');
+insert into  "zz_gvmag"("typ","beskrivning") values ('annat','annat magasin, t.ex. ytvatten');
 insert into  "zz_gvmag"("typ","beskrivning") values ('ospec','ospecificierat');
 insert into  "zz_tillromr"("typ","beskrivning") values ('a','typ a - hela gvbildn infiltrerar direkt till magasinet');
 insert into  "zz_tillromr"("typ","beskrivning") values ('b','typ b - hela gvbildn når magasinet via något annat magasin');
@@ -22,4 +22,11 @@ insert into  "zz_strukturlinje"("typ","beskrivning") values ('plastisk','plastis
 insert into  "zz_strukturlinje"("typ","beskrivning") values ('strukturell','strukturell formlinje');
 insert into  "zz_strukturlinje"("typ","beskrivning") values ('kontakt','litologisk kontakt');
 insert into  "zz_strukturlinje"("typ","beskrivning") values ('ospec','ospecificerad strukturlinje');
+insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (1,'Extremt kort transporttid');
+insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (2,'Kort transporttid');
+insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (3,'Genomsnittlig transporttid');
+insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (4,'Lång transporttid');
+insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (5,'Mycket lång transporttid');
+insert into  "zz_omattad_zon"("omattad_zon","beskrivning") values (0,'');
+insert into  "zz_omattad_zon"("omattad_zon","beskrivning") values (1,'Mäktig omättad zon');
 

@@ -60,7 +60,7 @@ class midv_tolkn:
         
         self.actionloadthelayers = QAction(QIcon(":/plugins/midv_tolkn/icons/load_layers_domains.png"), "Ladda tolkningslager t QGIS", self.iface.mainWindow())
         self.actionloadthelayers.setWhatsThis("Laddar tolkningslager för gvmagasin m.m. till QGIS")
-        QObject.connect(self.actionloadthelayers, SIGNAL("activated()"), self.loadthelayers)
+        QObject.connect(self.actionloadthelayers, SIGNAL("activated()"), self.load_the_layers)
 
         self.actionNewDB = QAction(QIcon(":/plugins/midv_tolkn/icons/create_new.png"), "Skapa en ny tolkningsdatabas", self.iface.mainWindow())
         QObject.connect(self.actionNewDB, SIGNAL("triggered()"), self.new_db)
@@ -72,6 +72,10 @@ class midv_tolkn:
         self.actionZipDB = QAction(QIcon(":/plugins/midv_tolkn/icons/zip.png"), "Backup av tolknings-databas", self.iface.mainWindow())
         self.actionZipDB.setWhatsThis("En komprimerad zip-fil kommer att skapas i samma dir som tolknings-databasen.")
         QObject.connect(self.actionZipDB, SIGNAL("triggered()"), self.zip_db)
+
+        self.actionUpgradeDB = QAction(QIcon(":/plugins/midv_tolkn/icons/create_new.png"), "Uppgradera tolknings-databas", self.iface.mainWindow())
+        self.actionUpgradeDB.setWhatsThis("Uppgradera en befintlig tolknings-databas till ny databas-struktur.")
+        QObject.connect(self.actionUpgradeDB, SIGNAL("triggered()"), self.upgrade_db)
 
         #self.actionabout = QAction(QIcon(":/plugins/midv_tolkn/icons/about.png"), "Information", self.iface.mainWindow())
         #QObject.connect(self.actionabout, SIGNAL("triggered()"), self.about)
@@ -116,6 +120,7 @@ class midv_tolkn:
         self.menu.addAction(self.actionNewDB)   
         self.menu.addAction(self.actionVacuumDB)
         self.menu.addAction(self.actionZipDB)
+        self.menu.addAction(self.actionUpgradeDB)
         #self.menu.addAction(self.actionabout)
 
     def unload(self):    
@@ -147,13 +152,12 @@ class midv_tolkn:
             if not conn_ok:
                 return
             d_domain_tables = [str(dd_table[0]) for dd_table in dd_tables]
-            print d_domain_tables#debug
             err_flag = utils.verify_msettings_loaded_and_layer_edit_mode(qgis.utils.iface, self.ms, d_domain_tables)#verify none of the tables are already loaded and in edit mode
             if err_flag == 0:
                 LoadLayers(qgis.utils.iface, self.ms.settingsdict,'Midvatten_data_domains')
         QApplication.restoreOverrideCursor()#now this long process is done and the cursor is back as normal
 
-    def loadthelayers(self):
+    def load_the_layers(self):
         LoadLayers(qgis.utils.iface,self.db)
 
     def new_db(self, set_locale=False):
@@ -168,6 +172,46 @@ class midv_tolkn:
         if not newdbinstance.dbpath=='':
             self.db = newdbinstance.dbpath
 
+    def upgrade_db(self, set_locale=False):
+        from_db = None
+        #get full path to the original db to be updated
+        if self.db:
+            use_current_db = utils.askuser("YesNo","""Do you want to upgrade %s?"""%str(db),'Current database?')
+            if use_current_db.result == 0:
+                from_db = None
+            elif use_current_db.result == 1:
+                from_db = self.db
+            elif use_current_db.result == '':
+                return
+        if not from_db:
+            from_db = QFileDialog.getOpenFileName(None, 'Ange tolknings-db som ska exporteras','',"Spatialite (*.sqlite)")
+        if not from_db:
+            QApplication.restoreOverrideCursor()
+            return None
+
+        #get EPSG in the original db
+        EPSG = utils.sql_load_fr_db("""SELECT srid FROM geom_cols_ref_sys WHERE Lower(f_table_name) = Lower('gvmag') AND Lower(f_geometry_column) = Lower('geometry')""",from_db)
+
+        #preparations to create new db of new design
+        if not set_locale:
+            set_locale = utils.getcurrentlocale()
+
+        filenamepath = os.path.join(os.path.dirname(__file__),"metadata.txt" )
+        iniText = QSettings(filenamepath , QSettings.IniFormat)
+        verno = str(iniText.value('version'))
+
+        #now create database of the updated design
+        from create_tolkn_db import newdb
+        newdbinstance = newdb(verno, user_select_CRS=False, EPSG_code = EPSG[1][0][0], set_locale=set_locale)
+
+        #transfer data to the new database
+        foo = utils.UpgradeDatabase(from_db,newdbinstance.dbpath, EPSG)
+
+        #set new database as the current db and load these layers
+        if not newdbinstance.dbpath=='':
+            self.db = newdbinstance.dbpath
+        self.load_the_layers()
+        
     def vacuum_db(self):
         force_another_db = False
         if self.db:

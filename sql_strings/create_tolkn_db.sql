@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*- This line is just for your information, the python plugin will not use the first line
+# -*- coding: utf-8 -*- This line is just for your information, the python plugin will not use the first line
 select 'drop table ' || name || ';' from sqlite_master where type = 'table';
 select InitSpatialMetadata(1);
 create table about_db ("table" text, "column" text, "data_type" text, "not_null" text, "default_value" text, "primary_key" text, "foreign_key" text, "description" text, "upd_date" text, "upd_sign" text);
@@ -14,15 +14,19 @@ CREATE TABLE "zz_gvdel"(pkuid integer primary key autoincrement,"typ" text uniqu
 CREATE TABLE "zz_gvmag"(pkuid integer primary key autoincrement,"typ" text unique not null,"beskrivning" text);
 CREATE TABLE "zz_tillromr"(pkuid integer primary key autoincrement,"typ" text unique not null,"beskrivning" text);
 CREATE TABLE "zz_strukturlinje"(pkuid integer primary key autoincrement,"typ" text unique not null,"beskrivning" text);
+CREATE TABLE "zz_trptid"(pkuid integer primary key autoincrement,"trptid_my_gvmag" integer unique not null,"beskrivning" text);
+CREATE TABLE "zz_omattad_zon"(pkuid integer primary key autoincrement,"omattad_zon" integer unique not null,"beskrivning" text);
 CREATE TABLE "gvmag"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_gvmag(typ));
 CREATE TABLE "gvflode"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text,"intermag" text, "updated" text,FOREIGN KEY(typ) REFERENCES zz_gvflode(typ), FOREIGN KEY(intermag) REFERENCES zz_gvmag(typ));
 CREATE TABLE "gvdel"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_gvdel(typ));
 CREATE TABLE "tillromr"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"gvbildn_mm" double,"andel_t_mag_proc" double,"area_km2" double,"flode_lPs" double,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_tillromr(typ));
 CREATE TABLE "sprickzon"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text);
 CREATE TABLE "strukturlinje"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_strukturlinje(typ));
+CREATE TABLE "sarbarhet"(pkuid integer primary key autoincrement,"trptid_my_gvmag" integer,"omattad_zon" integer,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(trptid_my_gvmag) REFERENCES zz_trptid(trptid_my_gvmag), FOREIGN KEY(omattad_zon) REFERENCES zz_omattad_zon(omattad_zon));
 SELECT AddGeometryColumn("gvmag", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("gvflode", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
 SELECT AddGeometryColumn("gvdel", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
 SELECT AddGeometryColumn("tillromr", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("sprickzon", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("strukturlinje", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
+SELECT AddGeometryColumn("sarbarhet", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);

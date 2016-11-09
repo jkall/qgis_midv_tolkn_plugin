@@ -30,13 +30,13 @@ import midv_tolkn_utils as utils
 
 class newdb():
 
-    def __init__(self, verno, user_select_CRS='y', EPSG_code=u'4326', set_locale=False):
-        self.dbpath = ''
+    def __init__(self, verno, user_select_CRS=True, EPSG_code=u'4326', set_locale=False,db_path=''):
+        self.dbpath = db_path
         self.create_new_db(verno,user_select_CRS,EPSG_code, set_locale)  #CreateNewDB(verno)
         
-    def create_new_db(self, verno, user_select_CRS='y', EPSG_code=u'4326', set_locale=False):  #CreateNewDB(self, verno):
+    def create_new_db(self, verno, user_select_CRS=True, EPSG_code=u'4326', set_locale=False, ):  #CreateNewDB(self, verno):
         """Open a new DataBase (create an empty one if file doesn't exists) and set as default DB"""
-        if user_select_CRS=='y':
+        if user_select_CRS:
             EPSGID=str(self.ask_for_CRS(set_locale)[0])
         else:
             EPSGID=EPSG_code
@@ -45,7 +45,8 @@ class newdb():
             utils.pop_up_info("Cancelling...")
         else: # If a CRS is selectd, go on and create the database
             #path and name of new db
-            self.dbpath = PyQt4.QtGui.QFileDialog.getSaveFileName(None, "Ny tolknings-DB","midv_tolkndb.sqlite","Spatialite (*.sqlite)")
+            if self.dbpath =='':
+                self.dbpath = PyQt4.QtGui.QFileDialog.getSaveFileName(None, "Ny tolknings-DB","midv_tolkndb.sqlite","Spatialite (*.sqlite)")
             if not self.dbpath:
                 PyQt4.QtGui.QApplication.restoreOverrideCursor()
                 return ''
@@ -101,9 +102,13 @@ class newdb():
                     except:
                         utils.pop_up_info('Failed to create DB!')
 
+                #self.cur.execute(r"""delete from spatial_ref_sys where srid NOT IN ('%s', '4326')""" % EPSGID)
+
                 self.insert_datadomains()
 
                 self.add_triggers()
+
+                #self.cur.execute('vacuum')
 
                 #FINISHED WORKING WITH THE DATABASE, CLOSE CONNECTIONS
                 self.conn.commit()
