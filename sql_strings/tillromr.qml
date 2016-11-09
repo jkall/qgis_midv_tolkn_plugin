@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.14.8-Essen" minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.14.8-Essen" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <edittypes>
     <edittype widgetv2type="TextEdit" name="pkuid">
       <widgetv2config IsMultiline="0" fieldEditable="0" UseHtml="0" labelOnTop="0"/>
@@ -8,7 +8,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="typ">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_tillromr20161109121748518" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="0" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_tillromr20161109171544730" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="gvbildn_mm">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -45,7 +45,7 @@
         <rule filter=" &quot;typ&quot;  = 'b'" key="{a0e121f8-0359-4a6f-ab3b-95fcf7de30fa}" symbol="7" label="typ b"/>
         <rule filter="&quot;typ&quot;='c'" key="{09ef4993-9e60-4159-9c3d-f7500bf16b16}" symbol="8" label="typ c"/>
       </rule>
-      <rule checkstate="0" filter=" &quot;andel_t_mag_proc&quot; is not null and  &quot;andel_t_mag_proc&quot; !=''" key="{3492ba72-f4e8-45d4-b984-7708c6eb5fc6}" symbol="9" label="Andel av grundvattenbildningen som når magasinet">
+      <rule filter=" &quot;andel_t_mag_proc&quot; is not null and  &quot;andel_t_mag_proc&quot; !=''" key="{3492ba72-f4e8-45d4-b984-7708c6eb5fc6}" symbol="9" label="Andel av grundvattenbildningen som når magasinet">
         <rule filter=" &quot;andel_t_mag_proc&quot; >99.9" key="{1c3bfa6e-62f8-4f44-95e0-d5d3b2bc8eba}" symbol="10" label="100%"/>
         <rule filter=" &quot;andel_t_mag_proc&quot; >74.9 and  &quot;andel_t_mag_proc&quot; &lt;100" key="{ba3c99dd-762d-47b1-9f4d-44547e8dfa30}" symbol="11" label="75-100%"/>
         <rule filter=" &quot;andel_t_mag_proc&quot; >49.9 and  &quot;andel_t_mag_proc&quot; &lt;75" key="{84a32f53-95e8-4d59-8dd7-fd290bcba367}" symbol="12" label="50-75%"/>
@@ -698,7 +698,7 @@
     <selectedonly on=""/>
   </labelattributes>
   <SingleCategoryDiagramRenderer diagramType="Pie">
-    <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="-4.65661e-10">
+    <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="0">
       <fontProperties description="Noto Sans,9,-1,5,50,0,0,0,0,0" style=""/>
       <attribute field="" color="#000000" label=""/>
     </DiagramCategory>
