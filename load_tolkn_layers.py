@@ -130,9 +130,6 @@ class LoadLayers():
                 if not layers[lyr]==None:
                     self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], layer_dict[lyr].dataProvider().fieldNameIndex('typ'), 'typ','beskrivning')
 
-        # special for sarbarhet
-        self.create_layer_value_relations(layer_dict['sarbarhet'], layer_dict['zz_trptid'], layer_dict[lyr].dataProvider().fieldNameIndex('trptid_my_gvmag'), 'trptid_my_gvmag','beskrivning')
-        self.create_layer_value_relations(layer_dict['sarbarhet'], layer_dict['zz_omattad_zon'], layer_dict[lyr].dataProvider().fieldNameIndex('omattad_zon'), 'omattad_zon','beskrivning')
         #special for gvflode
         self.create_layer_value_relations(layer_dict['gvflode'], layer_dict['zz_gvmag'], layer_dict['gvflode'].dataProvider().fieldNameIndex('intermag'), 'typ','beskrivning')
 

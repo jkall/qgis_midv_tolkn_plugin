@@ -1,14 +1,11 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.14.8-Essen" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.14.8-Essen" minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <edittypes>
     <edittype widgetv2type="TextEdit" name="pkuid">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
-    <edittype widgetv2type="ValueRelation" name="trptid_my_gvmag">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="trptid_my_gvmag" Layer="zz_trptid20161109124424273" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
-    </edittype>
-    <edittype widgetv2type="ValueRelation" name="omattad_zon">
-      <widgetv2config OrderByValue="1" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="omattad_zon" Layer="zz_omattad_zon20161109124424282" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+    <edittype widgetv2type="ValueRelation" name="typ">
+      <widgetv2config OrderByValue="0" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_trptid20161109170712166" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="ursprung">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -22,34 +19,14 @@
   </edittypes>
   <renderer-v2 forceraster="0" symbollevels="0" type="RuleRenderer" enableorderby="0">
     <rules key="{53aadcd5-4050-416c-9b5b-418e1f678414}">
-      <rule key="{202fb9f4-c031-48f9-876f-b80a53d19264}" symbol="0" label="Transporttid från markytan till magasinet">
-        <rule description="Extremt hög sårbarhet = mycket kort transporttid från markytan till grundvattenmagasinet" filter=" &quot;trptid_my_gvmag&quot;  = 1" key="{cebe76d7-fcda-4bb5-95e9-8c4ce3b05f4e}" symbol="1" label="mkt kort tid"/>
-        <rule description="hög sårbarhet = kort transporttid från markytan till grundvattenmagasinet" filter=" &quot;trptid_my_gvmag&quot;  = 2" key="{2c41393a-fdd7-4cb5-a3e2-96c8fc3208e2}" symbol="2" label="kort tid"/>
-        <rule description="genomsnittlig sårbarhet = genomsnittlig transporttid från markytan till grundvattenmagasinet" filter=" &quot;trptid_my_gvmag&quot;  = 3" key="{d2e7c5d1-1c4f-47cb-a1b0-2a5866e39d01}" symbol="3" label="genomsnittlig tid"/>
-        <rule description="låg sårbarhet = lång transporttid från markytan till grundvattenmagasinet" filter=" &quot;trptid_my_gvmag&quot;  = 4" key="{8065c03b-574f-4d2b-b52f-9c743553b73d}" symbol="4" label="lång tid"/>
-        <rule description="mycket låg sårbarhet = mycket lång transporttid från markytan till grundvattenmagasinet" filter=" &quot;trptid_my_gvmag&quot;  = 5" key="{9261ef12-434d-42ba-a185-24caa299d40c}" symbol="5" label="mkt lång tid"/>
-      </rule>
-      <rule key="{882d264e-fcb3-4a37-8768-5829375c8c17}" symbol="6" label="Omättad zon">
-        <rule description="området har en mäktig omättad zon (som är inkluderad vid bedömning av transporttid till magasinet)" filter=" &quot;omattad_zon&quot; = 1" key="{866f1b70-5ad6-42b0-9cdc-f2d6a981be72}" symbol="7" label="mäktig omättad zon"/>
-      </rule>
+      <rule description="Extremt hög sårbarhet = mycket kort transporttid från markytan till grundvattenmagasinet" filter=" &quot;typ&quot;  = 1" key="{d5e5e37c-1578-47cb-ae0b-5e039d26764f}" symbol="0" label="mkt kort tid"/>
+      <rule description="hög sårbarhet = kort transporttid från markytan till grundvattenmagasinet" filter=" &quot;typ&quot;  = 2" key="{ea583f06-e529-4ba4-920a-d47588b93b30}" symbol="1" label="kort tid"/>
+      <rule description="genomsnittlig sårbarhet = genomsnittlig transporttid från markytan till grundvattenmagasinet" filter=" &quot;typ&quot;  = 3" key="{2f124735-f683-406a-8b34-28a36306a87a}" symbol="2" label="genomsnittlig tid"/>
+      <rule description="låg sårbarhet = lång transporttid från markytan till grundvattenmagasinet" filter=" &quot;typ&quot;  = 4" key="{c7e2c9af-1c02-40d0-9cc4-318b3960e263}" symbol="3" label="lång tid"/>
+      <rule description="mycket låg sårbarhet = mycket lång transporttid från markytan till grundvattenmagasinet" filter=" &quot;typ&quot;  = 5" key="{c1cb4374-0f73-442e-b227-d6d01cd134d0}" symbol="4" label="mkt lång tid"/>
     </rules>
     <symbols>
       <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="151,226,153,255"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="no"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="no"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
         <layer pass="0" class="LinePatternFill" locked="0">
           <prop k="angle" v="45"/>
           <prop k="color" v="255,0,0,126"/>
@@ -64,7 +41,7 @@
           <prop k="offset_unit" v="MM"/>
           <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@1@0">
+          <symbol alpha="1" clip_to_extent="1" type="line" name="@0@0">
             <layer pass="0" class="SimpleLine" locked="0">
               <prop k="capstyle" v="square"/>
               <prop k="customdash" v="5;2"/>
@@ -102,7 +79,7 @@
           <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="2">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="1">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
@@ -134,7 +111,7 @@
           <prop k="offset_unit" v="MM"/>
           <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@2@1">
+          <symbol alpha="1" clip_to_extent="1" type="line" name="@1@1">
             <layer pass="0" class="SimpleLine" locked="0">
               <prop k="capstyle" v="square"/>
               <prop k="customdash" v="5;2"/>
@@ -155,7 +132,7 @@
           </symbol>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="3">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="2">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
@@ -187,7 +164,7 @@
           <prop k="offset_unit" v="MM"/>
           <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@3@1">
+          <symbol alpha="1" clip_to_extent="1" type="line" name="@2@1">
             <layer pass="0" class="SimpleLine" locked="0">
               <prop k="capstyle" v="square"/>
               <prop k="customdash" v="5;2"/>
@@ -208,7 +185,7 @@
           </symbol>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="4">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="3">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
@@ -240,7 +217,7 @@
           <prop k="offset_unit" v="MM"/>
           <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@4@1">
+          <symbol alpha="1" clip_to_extent="1" type="line" name="@3@1">
             <layer pass="0" class="SimpleLine" locked="0">
               <prop k="capstyle" v="square"/>
               <prop k="customdash" v="5;2"/>
@@ -261,7 +238,7 @@
           </symbol>
         </layer>
       </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="5">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="4">
         <layer pass="0" class="SimpleLine" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
@@ -293,7 +270,7 @@
           <prop k="offset_unit" v="MM"/>
           <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@5@1">
+          <symbol alpha="1" clip_to_extent="1" type="line" name="@4@1">
             <layer pass="0" class="SimpleLine" locked="0">
               <prop k="capstyle" v="square"/>
               <prop k="customdash" v="5;2"/>
@@ -312,70 +289,6 @@
               <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
             </layer>
           </symbol>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="6">
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="129,183,90,255"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="no"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="no"/>
-        </layer>
-      </symbol>
-      <symbol alpha="1" clip_to_extent="1" type="fill" name="7">
-        <layer pass="0" class="LinePatternFill" locked="0">
-          <prop k="angle" v="315"/>
-          <prop k="color" v="0,0,255,255"/>
-          <prop k="distance" v="5"/>
-          <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="distance_unit" v="MM"/>
-          <prop k="line_width" v="0.26"/>
-          <prop k="line_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <symbol alpha="1" clip_to_extent="1" type="line" name="@7@0">
-            <layer pass="0" class="SimpleLine" locked="0">
-              <prop k="capstyle" v="square"/>
-              <prop k="customdash" v="5;2"/>
-              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="customdash_unit" v="MM"/>
-              <prop k="draw_inside_polygon" v="0"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="0,0,0,255"/>
-              <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="0.5"/>
-              <prop k="line_width_unit" v="MM"/>
-              <prop k="offset" v="0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="use_custom_dash" v="0"/>
-              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
-            </layer>
-          </symbol>
-        </layer>
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="color" v="0,0,255,255"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="0,0,0,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0.26"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="style" v="no"/>
         </layer>
       </symbol>
     </symbols>

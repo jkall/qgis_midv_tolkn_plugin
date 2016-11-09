@@ -250,9 +250,14 @@ class midv_tolkn:
             connection = utils.dbconnection(dbpath)
             connection.connect2db()
             connection.conn.cursor().execute("begin immediate")
+
+            file_path = os.path.realpath(dbpath)
+            dir_path = os.path.dirname(file_path)
+            current_dir = dir_path.split(os.sep)[-1]
+
             bkupname = dbpath + datetime.datetime.now().strftime('%Y%m%dT%H%M') + '.zip'
             zf = zipfile.ZipFile(bkupname, mode='w')
-            zf.write(dbpath, compress_type=compression) #compression will depend on if zlib is found or not
+            zf.write(dbpath,os.path.basename(dbpath), compress_type=compression) #compression will depend on if zlib is found or not
             zf.close()
             connection.conn.rollback()
             connection.closedb()

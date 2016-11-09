@@ -22,11 +22,11 @@ insert into  "zz_strukturlinje"("typ","beskrivning") values ('plastisk','plastis
 insert into  "zz_strukturlinje"("typ","beskrivning") values ('strukturell','strukturell formlinje');
 insert into  "zz_strukturlinje"("typ","beskrivning") values ('kontakt','litologisk kontakt');
 insert into  "zz_strukturlinje"("typ","beskrivning") values ('ospec','ospecificerad strukturlinje');
-insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (1,'Extremt kort transporttid');
-insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (2,'Kort transporttid');
-insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (3,'Genomsnittlig transporttid');
-insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (4,'Lång transporttid');
-insert into  "zz_trptid"("trptid_my_gvmag","beskrivning") values (5,'Mycket lång transporttid');
-insert into  "zz_omattad_zon"("omattad_zon","beskrivning") values (0,'');
-insert into  "zz_omattad_zon"("omattad_zon","beskrivning") values (1,'Mäktig omättad zon');
+insert into  "zz_trptid"("typ","beskrivning") values (1,'Extremt kort transporttid');
+insert into  "zz_trptid"("typ","beskrivning") values (2,'Kort transporttid');
+insert into  "zz_trptid"("typ","beskrivning") values (3,'Genomsnittlig transporttid');
+insert into  "zz_trptid"("typ","beskrivning") values (4,'Lång transporttid');
+insert into  "zz_trptid"("typ","beskrivning") values (5,'Mycket lång transporttid');
+insert into  "zz_omattad_zon"("typ","beskrivning") values (0,'');
+insert into  "zz_omattad_zon"("typ","beskrivning") values (1,'Mäktig omättad zon');
 
