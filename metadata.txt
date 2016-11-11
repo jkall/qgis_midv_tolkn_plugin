@@ -3,7 +3,7 @@
 name=midv_tolkn
 qgisMinimumVersion=2.14
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.4.0
+version=Version 0.4.1
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
@@ -18,6 +18,8 @@ experimental=True
 deprecated=False
 
 changelog=
+        Version 0.4.1
+        - colorscale HSV for sarbarhet trptid och andel
         Version 0.4.0
         - introducing sarbarhet
         Version 0.3.0
