@@ -34,3 +34,5 @@ def default_layers(): # dictionary of layers with (some) corresponding data doma
 
 def relations(): #CURRENTLY NOT IN USE tuple of relation_names and relation_ids
     return (('gvmag_relation',u'gvmag_relation_id'),(u'gvdel_relation',u'gvdel_relation_id'),(u'gvflode_relation',u'gvflode_relation_id'),(u'tillromr_relation',u'tillromr_relation_id'),(u'strukturlinje_relation',u'strukturlinje_relation_id'),('trptid_relation',u'trptid_relation_id'))
+
+ 

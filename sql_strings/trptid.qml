@@ -5,7 +5,7 @@
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
     </edittype>
     <edittype widgetv2type="ValueRelation" name="typ">
-      <widgetv2config OrderByValue="0" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_trptid20161109170712166" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
+      <widgetv2config OrderByValue="0" AllowNull="1" FilterExpression="" UseCompleter="0" fieldEditable="1" Key="typ" Layer="zz_trptid20161111164328467" Value="beskrivning" labelOnTop="0" AllowMulti="0"/>
     </edittype>
     <edittype widgetv2type="TextEdit" name="ursprung">
       <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
@@ -29,7 +29,7 @@
       <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
         <layer pass="0" class="LinePatternFill" locked="0">
           <prop k="angle" v="45"/>
-          <prop k="color" v="255,0,0,126"/>
+          <prop k="color" v="255,0,0,255"/>
           <prop k="distance" v="5"/>
           <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="distance_unit" v="MM"/>
@@ -49,7 +49,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="227,26,28,255"/>
+              <prop k="line_color" v="255,0,0,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="1"/>
               <prop k="line_width_unit" v="MM"/>
@@ -68,7 +68,7 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="227,26,28,255"/>
+          <prop k="line_color" v="255,0,0,255"/>
           <prop k="line_style" v="solid"/>
           <prop k="line_width" v="0.8"/>
           <prop k="line_width_unit" v="MM"/>
@@ -87,7 +87,7 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="255,127,0,255"/>
+          <prop k="line_color" v="255,255,0,255"/>
           <prop k="line_style" v="solid"/>
           <prop k="line_width" v="0.8"/>
           <prop k="line_width_unit" v="MM"/>
@@ -99,7 +99,7 @@
         </layer>
         <layer pass="0" class="LinePatternFill" locked="0">
           <prop k="angle" v="45"/>
-          <prop k="color" v="255,127,0,255"/>
+          <prop k="color" v="255,255,0,255"/>
           <prop k="distance" v="5"/>
           <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="distance_unit" v="MM"/>
@@ -119,7 +119,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="255,127,0,255"/>
+              <prop k="line_color" v="255,255,0,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="1"/>
               <prop k="line_width_unit" v="MM"/>
@@ -140,7 +140,7 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="241,244,83,255"/>
+          <prop k="line_color" v="0,255,0,255"/>
           <prop k="line_style" v="solid"/>
           <prop k="line_width" v="0.8"/>
           <prop k="line_width_unit" v="MM"/>
@@ -152,7 +152,7 @@
         </layer>
         <layer pass="0" class="LinePatternFill" locked="0">
           <prop k="angle" v="45"/>
-          <prop k="color" v="241,244,83,255"/>
+          <prop k="color" v="0,255,0,255"/>
           <prop k="distance" v="5"/>
           <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="distance_unit" v="MM"/>
@@ -172,7 +172,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="241,244,83,255"/>
+              <prop k="line_color" v="0,255,0,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="1"/>
               <prop k="line_width_unit" v="MM"/>
@@ -193,7 +193,7 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="106,248,96,255"/>
+          <prop k="line_color" v="0,255,255,255"/>
           <prop k="line_style" v="solid"/>
           <prop k="line_width" v="0.8"/>
           <prop k="line_width_unit" v="MM"/>
@@ -205,7 +205,7 @@
         </layer>
         <layer pass="0" class="LinePatternFill" locked="0">
           <prop k="angle" v="45"/>
-          <prop k="color" v="106,248,96,255"/>
+          <prop k="color" v="0,255,255,255"/>
           <prop k="distance" v="5"/>
           <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="distance_unit" v="MM"/>
@@ -225,7 +225,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="106,248,96,255"/>
+              <prop k="line_color" v="0,255,255,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="1"/>
               <prop k="line_width_unit" v="MM"/>
@@ -246,7 +246,7 @@
           <prop k="customdash_unit" v="MM"/>
           <prop k="draw_inside_polygon" v="1"/>
           <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="36,129,29,255"/>
+          <prop k="line_color" v="0,0,255,255"/>
           <prop k="line_style" v="solid"/>
           <prop k="line_width" v="0.8"/>
           <prop k="line_width_unit" v="MM"/>
@@ -258,7 +258,7 @@
         </layer>
         <layer pass="0" class="LinePatternFill" locked="0">
           <prop k="angle" v="45"/>
-          <prop k="color" v="36,129,29,255"/>
+          <prop k="color" v="0,0,255,255"/>
           <prop k="distance" v="5"/>
           <prop k="distance_map_unit_scale" v="0,0,0,0,0,0"/>
           <prop k="distance_unit" v="MM"/>
@@ -278,7 +278,7 @@
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="36,129,29,255"/>
+              <prop k="line_color" v="0,0,255,255"/>
               <prop k="line_style" v="solid"/>
               <prop k="line_width" v="1"/>
               <prop k="line_width_unit" v="MM"/>
