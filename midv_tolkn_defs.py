@@ -22,14 +22,14 @@ import collections
 
 def default_layers(): # dictionary of layers with (some) corresponding data domains
     d = collections.OrderedDict()
-    d['omattad_zon']='zz_omattad_zon'
-    d['trptid']='zz_trptid'
     d['sprickzon']=None
     d['strukturlinje']='zz_strukturlinje'
     d['gvmag']='zz_gvmag'
     d['gvflode']='zz_gvflode'
     d['gvdel']='zz_gvdel'
     d['tillromr']='zz_tillromr'
+    d['trptid']='zz_trptid'
+    d['omattad_zon']='zz_omattad_zon'
     return d
 
 def relations(): #CURRENTLY NOT IN USE tuple of relation_names and relation_ids

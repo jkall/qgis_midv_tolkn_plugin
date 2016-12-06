@@ -43,7 +43,7 @@ class LoadLayers():
         self.iface = iface
         QApplication.setOverrideCursor(Qt.WaitCursor)
         if db:
-            use_current_db = utils.askuser("YesNo","""Do you want to load layers from %s?"""%str(db),'Which database?')
+            use_current_db = utils.askuser("YesNo","""Do you want to load layers from %s?"""%db,'Which database?')
             if use_current_db.result == 0:
                 db = None
             elif use_current_db.result == '':
