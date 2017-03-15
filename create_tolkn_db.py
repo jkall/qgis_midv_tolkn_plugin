@@ -75,7 +75,7 @@ class newdb():
                 # load sql syntax to initialise spatial metadata, automatically create GEOMETRY_COLUMNS and SPATIAL_REF_SYS
                 # then the syntax defines a Midvatten TOLKNINGS-db according to the loaded .sql-file
                 if not int(versionstext[0][0][0]) > 3: # which file to use depends on spatialite version installed
-                    utils.pop_up_info("Midvatten plugin needs spatialite4.\nDatabase can not be created")
+                    utils.pop_up_info("midv_tolkn plugin needs spatialite4.\nDatabase can not be created")
                     return ''
 
                 filenamestring = "create_tolkn_db.sql"
@@ -101,8 +101,11 @@ class newdb():
                         utils.pop_up_info('Failed to create DB! sql failed:\n' + line + '\n\nerror msg:\n' + str(e))
                     except:
                         utils.pop_up_info('Failed to create DB!')
-
-                #self.cur.execute(r"""delete from spatial_ref_sys where srid NOT IN ('%s', '4326')""" % EPSGID)
+                try:#spatial_ref_sys_aux not implemented until spatialite 4.3
+                    self.cur.execute(r"""delete from spatial_ref_sys_aux where srid NOT IN ('%s', '4326')""" % EPSGID)
+                except:
+                    pass
+                self.cur.execute(r"""delete from spatial_ref_sys where srid NOT IN ('%s', '4326')""" % EPSGID)
 
                 self.insert_datadomains()
 

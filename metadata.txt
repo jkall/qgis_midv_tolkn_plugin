@@ -19,7 +19,7 @@ deprecated=False
 
 changelog=
         Version 0.4.5
-        - 
+        - minor fix to reflect spatialite_ref_sys_all table introduced in splite 4.3
         Version 0.4.4
         - fix for non ascii characters in filepath
         Version 0.4.3
