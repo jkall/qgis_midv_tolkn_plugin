@@ -109,7 +109,7 @@ if __name__ == "__main__":
         help="Server port to connect to", metavar="80")
     parser.add_option(
         "-s", "--server", dest="server",
-        help="Specify server name", default=False)#metavar="plugins.qgis.org")
+        help="Specify server name", default=False, metavar="plugins.qgis.org")
     options, args = parser.parse_args()
     if len(args) != 1:
         print "No zip file specified, will create one instead.\n"

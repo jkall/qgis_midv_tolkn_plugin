@@ -22,9 +22,9 @@
   </edittypes>
   <renderer-v2 forceraster="0" symbollevels="0" type="RuleRenderer" enableorderby="0">
     <rules key="{3a677f81-6469-4248-8479-07b749d4e7c6}">
-      <rule filter="lower(typ) like '%fast%'" key="{63326be9-629c-4cfd-9426-2c9645bb5d83}" symbol="0" label="fast vattendelare"/>
-      <rule filter="lower(typ) like '%hydraulisk%'" key="{31467638-86ca-4606-a8aa-a913cda7bc74}" symbol="1" label="hydraulisk gräns"/>
-      <rule filter="lower(typ) like '%rörlig%'" key="{29baa1a8-f1df-4244-8901-00f25507560b}" symbol="2" label="rörlig vattendelare"/>
+      <rule filter="lower(typ) like '%fast%'" key="{63326be9-629c-4cfd-9426-2c9645bb5d83}" symbol="0" label="fast grundvattendelare"/>
+      <rule filter="lower(typ) like '%rörlig%'" key="{29baa1a8-f1df-4244-8901-00f25507560b}" symbol="2" label="rörlig grundvattendelare"/>
+      <rule filter="lower(typ) like '%hydraulisk%' or lower(typ) like '%annan%'" key="{31467638-86ca-4606-a8aa-a913cda7bc74}" symbol="1" label="annan gräns"/>
       <rule filter="ELSE" key="{e2dba1c8-8237-465d-95ea-522c00dccbf4}" symbol="3"/>
     </rules>
     <symbols>

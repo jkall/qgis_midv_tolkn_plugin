@@ -20,16 +20,16 @@
 
 import collections
 
-def default_layers(): # dictionary of layers with (some) corresponding data domains
+def default_layers(): # dictionary of layers with (some) corresponding data domains and relevant layer names
     d = collections.OrderedDict()
-    d['sprickzon']=None
-    d['strukturlinje']='zz_strukturlinje'
-    d['gvmag']='zz_gvmag'
-    d['gvflode']='zz_gvflode'
-    d['gvdel']='zz_gvdel'
-    d['tillromr']='zz_tillromr'
-    d['trptid']='zz_trptid'
-    d['omattad_zon']='zz_omattad_zon'
+    d['sprickzon']=(None,u'sprickzoner m.m.')
+    d['strukturlinje']=('zz_strukturlinje',u'strukturlinjer m.m.')
+    d['gvmag']=('zz_gvmag',u'grundvattenmagasin')
+    d['gvflode']=('zz_gvflode',u'grundvattenflöde')
+    d['gvdel']=('zz_gvdel',u'grundvattendelare och andra gränser')
+    d['tillromr']=('zz_tillromr',u'tillrinningsområden')
+    d['trptid']=('zz_trptid',u'transporttid')
+    d['omattad_zon']=('zz_omattad_zon',u'omättad zon')
     return d
 
 def relations(): #CURRENTLY NOT IN USE tuple of relation_names and relation_ids

@@ -90,8 +90,8 @@ class LoadLayers():
             layer_name_list.append(layer.name())
 
         #then load all spatial layers
-        layers = default_layers()  # ordered dict with layer-name:zz_layer-name
-        for tablename in layers.keys():
+        layers = default_layers()  # ordered dict with layer-name:(zz_layer-name,layer_name_for_map_legend)
+        for tablename,tup in layers.items():
             try:
                 uri.setDataSource('',tablename,'geometry')
                 layer = QgsVectorLayer(uri.uri(), tablename, 'spatialite') # Adding the layer as 'spatialite' instead of ogr vector layer is preferred
@@ -123,15 +123,25 @@ class LoadLayers():
                 pass
 
         MySubGroup.setExpanded(False)
-
+        
         # fix value relations
         for lyr in layers.keys():
             if lyr in layer_name_list:
-                if not layers[lyr]==None:
-                    self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], layer_dict[lyr].dataProvider().fieldNameIndex('typ'), 'typ','beskrivning')
+                if not layers[lyr][0]==None:
+                    #self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], layer_dict[lyr].dataProvider().fieldNameIndex('typ'), 'typ','beskrivning')
+                    self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr][0]], layer_dict[lyr].dataProvider().fieldNameIndex('typ'), 'typ','beskrivning')
 
-        #special for gvflode
+        #special fix for gvflode
         self.create_layer_value_relations(layer_dict['gvflode'], layer_dict['zz_gvmag'], layer_dict['gvflode'].dataProvider().fieldNameIndex('intermag'), 'typ','beskrivning')
+
+        #last, rename to readable names in map legend
+        for layer in layer_list:
+        #for lyr in layers.keys():
+            if layer.name() in layers:
+                try:
+                    layer.setLayerName(layers[layer.name()][1])
+                except:
+                    pass
 
         #finally refresh canvas
         canvas.refresh()

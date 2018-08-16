@@ -3,7 +3,7 @@
 name=midv_tolkn
 qgisMinimumVersion=2.14
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.4.5
+version=Version 0.4.6
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
@@ -18,6 +18,8 @@ experimental=True
 deprecated=False
 
 changelog=
+        Version 0.4.6
+        - changed layer names and a few datadomains and rules to reflect the updated conceptual model 
         Version 0.4.5
         - minor fix to reflect spatialite_ref_sys_all table introduced in splite 4.3
         Version 0.4.4

@@ -25,27 +25,27 @@
       <rule filter=" &quot;typ&quot; is not null" key="{978bcd92-1ce6-49b1-8fb1-b90c11cf817f}" symbol="0" label="Symbolik 1 - yttre linje">
         <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{bc669fc1-1393-4206-96e0-5bcdf13575bb}" symbol="1" label="huvudmagasin"/>
         <rule filter=" lower(&quot;typ&quot;)  like  '%central%'" key="{8757c463-86a4-43f2-a19b-152886690b49}" symbol="2" label="huvudmagasinets centrala delar"/>
-        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{c9657750-8c79-455e-b93d-c04b53493b24}" symbol="3" label="magasin i jordlager, som ej är huvudmag"/>
-        <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{02ffda9f-56d4-4c8f-bcc0-225e1aa06bc6}" symbol="4" label="magasin i ytliga jordlager, som ej är huvudmag"/>
-        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{848969f9-0443-46f5-b7c1-8fb1b890aed3}" symbol="5" label="magasin i berggrunden, som ej är huvudmag"/>
+        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%' and lower(&quot;typ&quot;) not like '%verlagra%'" key="{c9657750-8c79-455e-b93d-c04b53493b24}" symbol="3" label="magasin i jordlager"/>
+        <rule filter="lower(&quot;typ&quot;) like '%ytliga%' or lower(&quot;typ&quot;) like '%verlagra%'" key="{02ffda9f-56d4-4c8f-bcc0-225e1aa06bc6}" symbol="4" label="magasin i jordlager som överlagrar något annat magasin"/>
+        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{848969f9-0443-46f5-b7c1-8fb1b890aed3}" symbol="5" label="magasin i berggrunden"/>
         <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{b6b1a618-06ac-49cf-a3f5-c24fe69b993b}" symbol="6" label="annat magasin, t.ex. ytvatten"/>
-        <rule filter="ELSE" key="{1d77a79a-49a9-40ea-a235-f0512a602b1d}" symbol="7" label="ospecificerat grundvattenmagasin"/>
+        <rule filter="ELSE" key="{1d77a79a-49a9-40ea-a235-f0512a602b1d}" symbol="7" label="ospecificerat magasin"/>
       </rule>
       <rule filter=" &quot;typ&quot; is not null" key="{1d7719fa-9088-4e0a-a38f-ed88e6952138}" symbol="8" label="Symbolik 2 - linjefill">
         <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{2b7ecef8-9eb8-425c-a538-df2efd653086}" symbol="9" label="huvudmagasin"/>
         <rule filter=" lower(&quot;typ&quot;)  like  '%central%'" key="{a6c485af-c3bc-459c-a811-5dbaff3cc65a}" symbol="10" label="huvudmagasinets centrala delar"/>
-        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{61292958-cca7-4d2c-94e1-6f04e45b69a4}" symbol="11" label="magasin i jordlager, som ej är huvudmag"/>
-        <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{0cb097c3-ad38-4c8f-a5b4-06472c055831}" symbol="12" label="magasin i ytliga jordlager, som ej är huvudmag"/>
-        <rule checkstate="0" filter="lower(&quot;typ&quot;) like '%berg%'" key="{fa82f944-9edc-438a-b876-7b4afba0286f}" symbol="13" label="magasin i berggrunden, som ej är huvudmag"/>
+        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%' and lower(&quot;typ&quot;) not like '%verlagra%'" key="{61292958-cca7-4d2c-94e1-6f04e45b69a4}" symbol="11" label="magasin i jordlager"/>
+        <rule filter="lower(&quot;typ&quot;) like '%ytliga%' or lower(&quot;typ&quot;) like '%verlagra%'" key="{0cb097c3-ad38-4c8f-a5b4-06472c055831}" symbol="12" label="magasin i jordlager som överlagrar något annat magasin"/>
+        <rule checkstate="0" filter="lower(&quot;typ&quot;) like '%berg%'" key="{fa82f944-9edc-438a-b876-7b4afba0286f}" symbol="13" label="magasin i berggrunden"/>
         <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{fdd1e883-3a4f-49a6-af80-b9c14e5611c3}" symbol="14" label="annat magasin, t.ex. ytvatten"/>
         <rule checkstate="0" filter="ELSE" key="{208c906d-5096-4561-8b8c-827315446fe5}" symbol="15" label="ospecificerat grundvattenmagasin"/>
       </rule>
       <rule checkstate="0" filter=" &quot;typ&quot; is not null" key="{83c47323-2d40-439c-a86d-9835a7358263}" symbol="16" label="Symbolik 3 - fyllda polygoner">
         <rule filter=" lower(&quot;typ&quot;)  like  '%huvudmag%'" key="{81e6932f-1111-4b8e-94d3-ed96a33a0443}" symbol="17" label="huvudmagasin"/>
         <rule filter=" lower(&quot;typ&quot;) like '%central%'" key="{0117775e-f793-458e-a5a5-36163129b720}" symbol="18" label="huvudmagasinets centrala delar"/>
-        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%'" key="{48fae3b1-c145-4f19-b0c7-69fd8723b0a0}" symbol="19" label="magasin i jordlager, som ej är huvudmag"/>
-        <rule filter="lower(&quot;typ&quot;) like '%ytliga%'" key="{bf015d45-723d-449c-90d0-c74d8a9c5607}" symbol="20" label="magasin i ytliga jordlager, som ej är huvudmag"/>
-        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{2fe2d829-cd7f-47fe-a582-52eb301a20f4}" symbol="21" label="magasin i berggrunden, som ej är huvudmag"/>
+        <rule filter=" lower(&quot;typ&quot;) like '%jord%' and  lower(&quot;typ&quot;) not like '%ytlig%' and lower(&quot;typ&quot;) not like '%verlagra%'" key="{48fae3b1-c145-4f19-b0c7-69fd8723b0a0}" symbol="19" label="magasin i jordlager"/>
+        <rule filter="lower(&quot;typ&quot;) like '%ytliga%' or lower(&quot;typ&quot;) like '%verlagra%'" key="{bf015d45-723d-449c-90d0-c74d8a9c5607}" symbol="20" label="magasin i jordlager som överlagrar något annat magasin"/>
+        <rule filter="lower(&quot;typ&quot;) like '%berg%'" key="{2fe2d829-cd7f-47fe-a582-52eb301a20f4}" symbol="21" label="magasin i berggrunden"/>
         <rule filter="lower(&quot;typ&quot;) like '%annat%'" key="{d0bd5354-1c2a-4d6e-9a1e-61a32367fb0d}" symbol="22" label="annat magasin, t.ex. ytvatten"/>
         <rule filter="ELSE" key="{9501b5ab-c8fc-42c1-ab9a-1fea945af8ab}" symbol="23" label="ospecificerat grundvattenmagasin"/>
       </rule>

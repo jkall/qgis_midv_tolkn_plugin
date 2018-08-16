@@ -25,10 +25,11 @@
   </edittypes>
   <renderer-v2 forceraster="0" symbollevels="0" type="RuleRenderer" enableorderby="0">
     <rules key="{68536fe3-ca73-4e1a-9ccf-e48557ce07b2}">
-      <rule filter="lower(&quot;typ&quot;)  like '%huvudmag%'" key="{2081aacf-f2b8-464a-8770-bedd1c4c5067}" symbol="0" label="gvflöde i huvudmagasinet"/>
-      <rule filter="lower(&quot;typ&quot;)  like '%jordlager%'" key="{2bbcd2f1-34ba-4797-b014-215001821a94}" symbol="1" label="gvflöde i jordlager som inte är huvudmagasinet"/>
-      <rule filter="lower(&quot;typ&quot;)  like '%berg%'" key="{726f614a-8d68-46e7-b088-bd925e9891c1}" symbol="2" label="gvflöde i berggrunden"/>
-      <rule filter="lower( &quot;typ&quot; ) like '%ytlig%'" key="{20ed1c82-cc1d-4817-b2c2-9892d4cc896f}" symbol="3" label="gvflöde i ytliga jordlager"/>
+      <rule filter="lower(&quot;typ&quot;)  like '%huvudmag%'" key="{2081aacf-f2b8-464a-8770-bedd1c4c5067}" symbol="0" label="i huvudmagasinet"/>
+      <rule filter="lower(&quot;typ&quot;)  like '%jordlager%'" key="{2bbcd2f1-34ba-4797-b014-215001821a94}" symbol="1" label="i jordlager"/>
+      <rule filter="lower(&quot;typ&quot;)  like '%berg%'" key="{726f614a-8d68-46e7-b088-bd925e9891c1}" symbol="2" label="i berggrunden"/>
+      <rule filter="lower( &quot;typ&quot; ) like '%ytlig%'" key="{20ed1c82-cc1d-4817-b2c2-9892d4cc896f}" symbol="3" label="i ytliga jordlager"/>
+      <rule filter="lower( &quot;typ&quot; ) like '%verlagra%'" key="{a3fccefe-e2fc-4739-9fb9-06db5751d3ca}" symbol="6" label="i överlagrande magasin"/>
       <rule filter="lower( &quot;intermag&quot; ) like '%huvudmag%'" key="{d6dd86af-393b-488f-a733-90cf63a82bd0}" symbol="4" label="utbyte med huvudmagasinet"/>
       <rule filter="&quot;intermag&quot; is not null and lower( &quot;intermag&quot; ) not like '%huvudmag%'" key="{1aa27444-7ef8-4874-9866-6f626fa96d84}" symbol="5" label="utbyte med annat magasin"/>
     </rules>
@@ -281,6 +282,59 @@
           <prop k="offset_unit" v="MM"/>
           <prop k="use_custom_dash" v="0"/>
           <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+        </layer>
+      </symbol>
+      <symbol alpha="1" clip_to_extent="1" type="line" name="6">
+        <layer pass="0" class="SimpleLine" locked="1">
+          <prop k="capstyle" v="square"/>
+          <prop k="customdash" v="5;2"/>
+          <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="customdash_unit" v="MM"/>
+          <prop k="draw_inside_polygon" v="0"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="line_color" v="0,232,255,255"/>
+          <prop k="line_style" v="solid"/>
+          <prop k="line_width" v="0.5"/>
+          <prop k="line_width_unit" v="MM"/>
+          <prop k="offset" v="0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="use_custom_dash" v="0"/>
+          <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+        </layer>
+        <layer pass="0" class="MarkerLine" locked="0">
+          <prop k="interval" v="3"/>
+          <prop k="interval_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="interval_unit" v="MM"/>
+          <prop k="offset" v="0"/>
+          <prop k="offset_along_line" v="0"/>
+          <prop k="offset_along_line_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_along_line_unit" v="MM"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="placement" v="lastvertex"/>
+          <prop k="rotate" v="1"/>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="@3@1">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="0,232,255,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="name" v="arrowhead"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,232,255,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.5"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="area"/>
+              <prop k="size" v="3"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
         </layer>
       </symbol>
     </symbols>
