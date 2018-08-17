@@ -26,10 +26,10 @@
   <renderer-v2 forceraster="0" symbollevels="0" type="RuleRenderer" enableorderby="0">
     <rules key="{68536fe3-ca73-4e1a-9ccf-e48557ce07b2}">
       <rule filter="lower(&quot;typ&quot;)  like '%huvudmag%'" key="{2081aacf-f2b8-464a-8770-bedd1c4c5067}" symbol="0" label="i huvudmagasinet"/>
-      <rule filter="lower(&quot;typ&quot;)  like '%jordlager%'" key="{2bbcd2f1-34ba-4797-b014-215001821a94}" symbol="1" label="i jordlager"/>
-      <rule filter="lower(&quot;typ&quot;)  like '%berg%'" key="{726f614a-8d68-46e7-b088-bd925e9891c1}" symbol="2" label="i berggrunden"/>
+      <rule filter="lower(&quot;typ&quot;)  like '%jordlager%' and  lower(&quot;typ&quot;) not like '%ytlig%' and lower(&quot;typ&quot;) not like '%verlagra%'" key="{2bbcd2f1-34ba-4797-b014-215001821a94}" symbol="1" label="i jordlager"/>
       <rule filter="lower( &quot;typ&quot; ) like '%ytlig%'" key="{20ed1c82-cc1d-4817-b2c2-9892d4cc896f}" symbol="3" label="i ytliga jordlager"/>
       <rule filter="lower( &quot;typ&quot; ) like '%verlagra%'" key="{a3fccefe-e2fc-4739-9fb9-06db5751d3ca}" symbol="6" label="i överlagrande magasin"/>
+      <rule filter="lower(&quot;typ&quot;)  like '%berg%'" key="{726f614a-8d68-46e7-b088-bd925e9891c1}" symbol="2" label="i berggrunden"/>
       <rule filter="lower( &quot;intermag&quot; ) like '%huvudmag%'" key="{d6dd86af-393b-488f-a733-90cf63a82bd0}" symbol="4" label="utbyte med huvudmagasinet"/>
       <rule filter="&quot;intermag&quot; is not null and lower( &quot;intermag&quot; ) not like '%huvudmag%'" key="{1aa27444-7ef8-4874-9866-6f626fa96d84}" symbol="5" label="utbyte med annat magasin"/>
     </rules>
