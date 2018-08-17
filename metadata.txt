@@ -14,7 +14,7 @@ homepage=https://github.com/jkall/qgis_midv_tolkn_plugin
 authorName=Josef Källgården
 tracker=https://github.com/jkall/qgis_midv_tolkn_plugin/issues?state=open
 repository=https://github.com/jkall/qgis_midv_tolkn_plugin
-experimental=True
+experimental=False
 deprecated=False
 
 changelog=
