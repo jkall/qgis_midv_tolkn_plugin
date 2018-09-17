@@ -89,6 +89,14 @@ class LoadLayers():
             layer_list.append(layer)
             layer_name_list.append(layer.name())
 
+        # Then the specific table for gw flow sum
+        try:
+            uristring= 'dbname="' + self.dbpath + '" ' + r"""table='tillromr_summaflode'"""
+            layer = QgsVectorLayer(uristring,'tillromr_summaflode', 'spatialite')
+            layer_list.append(layer)
+        except:
+            pass
+
         #then load all spatial layers
         layers = default_layers()  # ordered dict with layer-name:(zz_layer-name,layer_name_for_map_legend)
         for tablename,tup in layers.items():

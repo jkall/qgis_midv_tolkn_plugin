@@ -32,3 +32,4 @@ SELECT AddGeometryColumn("sprickzon", "geometry", CHANGETORELEVANTEPSGID, "MULTI
 SELECT AddGeometryColumn("strukturlinje", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
 SELECT AddGeometryColumn("trptid", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("omattad_zon", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
+create view "tillromr_summaflode" as select "namn", sum("flode_lPs") as summa_flode_lPs from "tillromr" group by "namn";

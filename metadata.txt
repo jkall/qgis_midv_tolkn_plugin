@@ -3,7 +3,7 @@
 name=midv_tolkn
 qgisMinimumVersion=2.14
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.4.7
+version=Version 0.4.8
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
@@ -18,6 +18,8 @@ experimental=False
 deprecated=False
 
 changelog=
+        Version 0.4.8
+        - spatialite view to sum gw recharge per each "name" field in layer/table tillromr
         Version 0.4.7
         - more changes due to the updated conceptual model 
         Version 0.4.6
