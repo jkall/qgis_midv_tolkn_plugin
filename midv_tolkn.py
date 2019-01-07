@@ -18,20 +18,18 @@
  *                                                                         *
  ***************************************************************************/
 """
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtCore import QDir
-from PyQt4.QtGui import *
-from qgis.core import *
-import qgis.utils
-import shutil
-import resources  # Initialize Qt resources from file resources.py
-
+import datetime
 # Import some general python modules
 import os.path
 import sys
-import datetime
 import zipfile
+
+import qgis.utils
+# Import the PyQt and QGIS libraries
+from qgis.PyQt.QtCore import QCoreApplication, QSettings, Qt, QFile
+from qgis.PyQt.QtGui import QCursor, QIcon
+from qgis.PyQt.QtWidgets import QAction, QApplication, QFileDialog, QMenu
+
 try:
     import zlib
     compression = zipfile.ZIP_DEFLATED
@@ -43,8 +41,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
 
 # Import midv_tolkn tools and modules
-from load_tolkn_layers import LoadLayers
-import midv_tolkn_utils as utils 
+from .load_tolkn_layers import LoadLayers
+from . import midv_tolkn_utils as utils 
 
 class midv_tolkn:
     def __init__(self, iface):
@@ -60,25 +58,25 @@ class midv_tolkn:
         
         self.actionloadthelayers = QAction(QIcon(":/plugins/midv_tolkn/icons/load_layers_domains.png"), "Ladda tolkningslager t QGIS", self.iface.mainWindow())
         self.actionloadthelayers.setWhatsThis("Laddar tolkningslager för gvmagasin m.m. till QGIS")
-        QObject.connect(self.actionloadthelayers, SIGNAL("activated()"), self.load_the_layers)
+        self.actionloadthelayers.triggered.connect(lambda x: self.load_the_layers())
 
         self.actionNewDB = QAction(QIcon(":/plugins/midv_tolkn/icons/create_new.png"), "Skapa en ny tolkningsdatabas", self.iface.mainWindow())
-        QObject.connect(self.actionNewDB, SIGNAL("triggered()"), self.new_db)
+        self.actionNewDB.triggered.connect(lambda x: self.new_db())
 
         self.actionVacuumDB = QAction(QIcon(":/plugins/midv_tolkn/icons/vacuum.png"), "Packa (vacuum) tolkn-db", self.iface.mainWindow())
         self.actionVacuumDB.setWhatsThis("Perform database vacuuming")
-        QObject.connect(self.actionVacuumDB, SIGNAL("triggered()"), self.vacuum_db)
+        self.actionVacuumDB.triggered.connect(lambda x: self.vacuum_db())
 
         self.actionZipDB = QAction(QIcon(":/plugins/midv_tolkn/icons/zip.png"), "Backup av tolknings-databas", self.iface.mainWindow())
         self.actionZipDB.setWhatsThis("En komprimerad zip-fil kommer att skapas i samma dir som tolknings-databasen.")
-        QObject.connect(self.actionZipDB, SIGNAL("triggered()"), self.zip_db)
+        self.actionZipDB.triggered.connect(lambda x: self.zip_db())
 
         self.actionUpgradeDB = QAction(QIcon(":/plugins/midv_tolkn/icons/create_new.png"), "Uppgradera tolknings-databas", self.iface.mainWindow())
         self.actionUpgradeDB.setWhatsThis("Uppgradera en befintlig tolknings-databas till ny databas-struktur.")
-        QObject.connect(self.actionUpgradeDB, SIGNAL("triggered()"), self.upgrade_db)
+        self.actionUpgradeDB.triggered.connect(lambda x: self.upgrade_db())
 
         #self.actionabout = QAction(QIcon(":/plugins/midv_tolkn/icons/about.png"), "Information", self.iface.mainWindow())
-        #QObject.connect(self.actionabout, SIGNAL("triggered()"), self.about)
+        #self.actionabout.triggered.connect(lambda x: self.about)
         
         # Add button
         self.iface.addToolBarIcon(self.actionloadthelayers)
@@ -167,7 +165,7 @@ class midv_tolkn:
         filenamepath = os.path.join(os.path.dirname(__file__),"metadata.txt" )
         iniText = QSettings(filenamepath , QSettings.IniFormat)
         verno = str(iniText.value('version')) 
-        from create_tolkn_db import newdb
+        from .create_tolkn_db import newdb
         newdbinstance = newdb(verno, set_locale=set_locale)
         if not newdbinstance.dbpath=='':
             self.db = newdbinstance.dbpath
@@ -176,7 +174,7 @@ class midv_tolkn:
         from_db = None
         #get full path to the original db to be updated
         if self.db:
-            use_current_db = utils.askuser("YesNo","""Do you want to upgrade %s?"""%str(db),'Current database?')
+            use_current_db = utils.Askuser("YesNo","""Do you want to upgrade %s?"""%self.db,'Current database?')
             if use_current_db.result == 0:
                 from_db = None
             elif use_current_db.result == 1:
@@ -184,7 +182,7 @@ class midv_tolkn:
             elif use_current_db.result == '':
                 return
         if not from_db:
-            from_db = QFileDialog.getOpenFileName(None, 'Ange tolknings-db som ska exporteras','',"Spatialite (*.sqlite)")
+            from_db = QFileDialog.getOpenFileName(None, 'Ange tolknings-db som ska exporteras','',"Spatialite (*.sqlite)")[0]
         if not from_db:
             QApplication.restoreOverrideCursor()
             return None
@@ -201,7 +199,7 @@ class midv_tolkn:
         verno = str(iniText.value('version'))
 
         #now create database of the updated design
-        from create_tolkn_db import newdb
+        from .create_tolkn_db import newdb
         newdbinstance = newdb(verno, user_select_CRS=False, EPSG_code = EPSG[1][0][0], set_locale=set_locale)
 
         #transfer data to the new database
@@ -215,7 +213,7 @@ class midv_tolkn:
     def vacuum_db(self):
         force_another_db = False
         if self.db:
-            use_current_db = utils.askuser("YesNo","""Vill du packa %s?"""%str(db),'Which database?')
+            use_current_db = utils.Askuser("YesNo","""Vill du packa %s?"""%self.db,'Which database?')
             if use_current_db.result == 1:
                 dbpath = self.db
                 force_another_db = True
@@ -224,17 +222,17 @@ class midv_tolkn:
             elif use_current_db.result == '':
                 return
         if not self.db or force_another_db:
-            dbpath = QFileDialog.getOpenFileName(None, 'Ange db som ska packas','',"Spatialite (*.sqlite)")
+            dbpath = QFileDialog.getOpenFileName(None, 'Ange db som ska packas','',"Spatialite (*.sqlite)")[0]
 
         QApplication.setOverrideCursor(Qt.WaitCursor)
-        utils.sql_alter_db([dbpath],'vacuum')
+        utils.sql_alter_db(dbpath,'vacuum')
         QApplication.restoreOverrideCursor()
         
     def zip_db(self):
         force_another_db = False
         dbpath=None
         if self.db:
-            use_current_db = utils.askuser("YesNo",u'Vill du göra backup av %s?'%str(self.db),'Which database?')
+            use_current_db = utils.Askuser("YesNo",'Vill du göra backup av %s?'%self.db,'Which database?')
             if use_current_db.result == 1:
                 dbpath = self.db
                 force_another_db = False
@@ -243,7 +241,7 @@ class midv_tolkn:
             elif use_current_db.result == '':
                 return
         if not self.db or force_another_db:
-            dbpath = QFileDialog.getOpenFileName(None, u'Ange db som du vill skapa backup utav','',"Spatialite (*.sqlite)")
+            dbpath = QFileDialog.getOpenFileName(None, 'Ange db som du vill skapa backup utav','',"Spatialite (*.sqlite)")[0]
 
         if dbpath:
             QApplication.setOverrideCursor(Qt.WaitCursor)

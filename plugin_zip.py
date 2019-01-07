@@ -11,11 +11,10 @@ cd ~/pythoncode/qgis_plugins/midv_tolkn
 python plugin_zip.py
 """
 
-import sys
-import os
 import getpass
-import xmlrpclib
-import zipfile, zlib
+import os
+import xmlrpc.client
+import zipfile
 from optparse import OptionParser
 
 # Configuration
@@ -40,25 +39,25 @@ def main(parameters, arguments):
         parameters.server,
         parameters.port,
         ENDPOINT)
-    print "Connecting to: %s" % hide_password(address)
+    print("Connecting to: %s" % hide_password(address))
 
-    server = xmlrpclib.ServerProxy(address, verbose=VERBOSE)
+    server = xmlrpc.client.ServerProxy(address, verbose=VERBOSE)
 
     try:
         plugin_id, version_id = server.plugin.upload(
-            xmlrpclib.Binary(open(arguments[0]).read()))
-        print "Plugin ID: %s" % plugin_id
-        print "Version ID: %s" % version_id
-    except xmlrpclib.ProtocolError, err:
-        print "A protocol error occurred"
-        print "URL: %s" % hide_password(err.url, 0)
-        print "HTTP/HTTPS headers: %s" % err.headers
-        print "Error code: %d" % err.errcode
-        print "Error message: %s" % err.errmsg
-    except xmlrpclib.Fault, err:
-        print "A fault occurred"
-        print "Fault code: %d" % err.faultCode
-        print "Fault string: %s" % err.faultString
+            xmlrpc.client.Binary(open(arguments[0]).read()))
+        print("Plugin ID: %s" % plugin_id)
+        print("Version ID: %s" % version_id)
+    except xmlrpc.client.ProtocolError as err:
+        print("A protocol error occurred")
+        print("URL: %s" % hide_password(err.url, 0))
+        print("HTTP/HTTPS headers: %s" % err.headers)
+        print("Error code: %d" % err.errcode)
+        print("Error message: %s" % err.errmsg)
+    except xmlrpc.client.Fault as err:
+        print("A fault occurred")
+        print("Fault code: %d" % err.faultCode)
+        print("Fault string: %s" % err.faultString)
 
 
 def hide_password(url, start=6):
@@ -87,9 +86,9 @@ def create_zipfile():#excludes are given in code below!
         files[:] = [f for f in files if f not in ['.gitignore', 'plugin_zip.py','compile_and_prepare_for_upload_notes.txt']]#exclude specific files
         files[:]= [ file for file in files if not file.endswith( ('.pyc','.zip') ) ]#exclude specific file extensions
         for file in files:
-            print('now adding this file ' + os.path.join(root,file))
+            print(('now adding this file ' + os.path.join(root,file)))
             #print('in archive it is saved as ' + os.path.join(current_dir,file))
-            print('in archive it is saved as {}'.format(os.path.relpath(os.path.join(root, file), os.path.join(dir_path, '..'))))
+            print(('in archive it is saved as {}'.format(os.path.relpath(os.path.join(root, file), os.path.join(dir_path, '..')))))
             #zf.write(os.path.join(root,file),os.path.join(current_dir,file), compress_type=zipfile.ZIP_DEFLATED)
             zf.write(os.path.join(root,file),os.path.relpath(os.path.join(root, file), os.path.join(dir_path, '..')), compress_type=zipfile.ZIP_DEFLATED)
                 
@@ -112,10 +111,10 @@ if __name__ == "__main__":
         help="Specify server name", default=False, metavar="plugins.qgis.org")
     options, args = parser.parse_args()
     if len(args) != 1:
-        print "No zip file specified, will create one instead.\n"
+        print("No zip file specified, will create one instead.\n")
         zipfilename = create_zipfile()
         args = [zipfilename]
-        print('created file: ' + args[0])
+        print(('created file: ' + args[0]))
         parser.print_help()
         #sys.exit(1)
     #if not options.server:
@@ -126,8 +125,8 @@ if __name__ == "__main__":
         if not options.username:
             # interactive mode
             username = getpass.getuser()
-            print "Please enter user name [%s] :" % username,
-            res = raw_input()
+            print("Please enter user name [%s] :" % username, end=' ')
+            res = input()
             if res != "":
                 options.username = res
             else:

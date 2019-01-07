@@ -18,17 +18,18 @@
  ***************************************************************************/
 """
 
-from PyQt4.QtCore import *  
-from PyQt4.QtGui import *  
-from qgis.core import *  
-from qgis.gui import *
+
+import os
 
 import qgis.utils
-import os
-import locale
-import collections
-import midv_tolkn_utils as utils
-import midv_tolkn_defs as defs
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtWidgets import QApplication, QFileDialog
+from qgis.core import QgsLogger, QgsProject, QgsDataSourceUri, QgsVectorLayer, QgsRelation, QgsEditorWidgetSetup
+from qgis.utils import spatialite_connect
+
+from . import midv_tolkn_defs as defs
+from . import midv_tolkn_utils as utils
+
 
 def default_layers(): # dictionary of layers with (some) corresponding data domains
     return defs.default_layers()
@@ -43,19 +44,17 @@ class LoadLayers():
         self.iface = iface
         QApplication.setOverrideCursor(Qt.WaitCursor)
         if db:
-            use_current_db = utils.askuser("YesNo","""Do you want to load layers from %s?"""%db,'Which database?')
+            use_current_db = utils.Askuser("YesNo","""Do you want to load layers from %s?"""%db,'Which database?')
             if use_current_db.result == 0:
                 db = None
             elif use_current_db.result == '':
                 return
         if not db:
-            self.dbpath = QFileDialog.getOpenFileName(None, 'Ladda tolknings-db','',"Spatialite (*.sqlite)")
+            self.dbpath = QFileDialog.getOpenFileName(None, 'Ladda tolknings-db','',"Spatialite (*.sqlite)")[0]
         if not self.dbpath:
             QApplication.restoreOverrideCursor()
-            return None
         else:
             self.root = QgsProject.instance().layerTreeRoot()
-            self.legend = self.iface.legendInterface()
             #self.remove_relations()
             self.remove_layers()
             self.add_layers()
@@ -69,9 +68,11 @@ class LoadLayers():
             position_index = 1
         else:
             position_index = 0
-        MyGroup = self.root.insertGroup(position_index, self.group_name)
-        MySubGroup = MyGroup.addGroup(u'värdeförråd')
-        uri = QgsDataSourceURI()
+
+        MyGroup = qgis.core.QgsLayerTreeGroup(name=self.group_name, checked=True)
+        self.root.insertChildNode(position_index, MyGroup)
+        MySubGroup = MyGroup.addGroup('värdeförråd')
+        uri = QgsDataSourceUri()
         uri.setDatabase(self.dbpath)
         canvas = self.iface.mapCanvas()
         layer_list = []
@@ -99,7 +100,7 @@ class LoadLayers():
 
         #then load all spatial layers
         layers = default_layers()  # ordered dict with layer-name:(zz_layer-name,layer_name_for_map_legend)
-        for tablename,tup in layers.items():
+        for tablename,tup in list(layers.items()):
             try:
                 uri.setDataSource('',tablename,'geometry')
                 layer = QgsVectorLayer(uri.uri(), tablename, 'spatialite') # Adding the layer as 'spatialite' instead of ogr vector layer is preferred
@@ -112,7 +113,7 @@ class LoadLayers():
                 qgis.utils.iface.messageBar().pushMessage("Warning","Table %s not found in db. DB probably created w old plugin version."%str(tablename), 1,duration=5)
         #now loop over all the layers and set styles etc
         for layer in layer_list:
-            QgsMapLayerRegistry.instance().addMapLayers([layer],False)
+            QgsProject.instance().addMapLayers([layer],False)
             if layer.name() in d_domain_tables:
                 MySubGroup.insertLayer(0,layer)
             else:
@@ -133,7 +134,7 @@ class LoadLayers():
         MySubGroup.setExpanded(False)
         
         # fix value relations
-        for lyr in layers.keys():
+        for lyr in list(layers.keys()):
             if lyr in layer_name_list:
                 if not layers[lyr][0]==None:
                     #self.create_layer_value_relations(layer_dict[lyr], layer_dict[layers[lyr]], layer_dict[lyr].dataProvider().fieldNameIndex('typ'), 'typ','beskrivning')
@@ -163,23 +164,23 @@ class LoadLayers():
         i=0
         layers = default_layers()
         rel_tuples = relations()
-        for lyr in layers.keys():
+        for lyr in list(layers.keys()):
             rel = QgsRelation()
             rel.setReferencingLayer( utils.find_layer(layers[lyr]).id() )
             rel.setReferencedLayer( utils.find_layer(lyr).id() )
             rel.addFieldPair( 'typ', 'typ' )
-            rel.setRelationId(rel_tuples[i][1])
-            rel.setRelationName(rel_tuples[i][0])
+            rel.setId(rel_tuples[i][1])
+            rel.setName(rel_tuples[i][0])
             if rel.isValid(): # It will only be added if it is valid. If not, check the ids and field names                
                 QgsProject.instance().relationManager().addRelation(rel)
                 #validate
-                for key in QgsProject.instance().relationManager().relations().iterkeys():
+                for key in QgsProject.instance().relationManager().relations().keys():
                     #print(key)
                     if str(key)==rel.id():
-                        print('added relation %s'%str(lyr))
+                        print(('added relation %s'%str(lyr)))
             else:
                 qgis.utils.iface.messageBar().pushMessage("Error","""Failed to create relation %s!"""%str(lyr),2)
-                print("""Failed to create relation %s!"""%str(lyr))
+                print(("""Failed to create relation %s!"""%str(lyr)))
             i+=1
 
         """
@@ -210,7 +211,7 @@ class LoadLayers():
         """
 
     def create_layer_value_relations(self, the_layer, target_layer, index,key_field, value_field):#these are layer-specific value maps, not project relations
-        the_layer.editFormConfig().setWidgetType(index,"ValueRelation")
+        #the_layer.editFormConfig().setWidgetType(index,"ValueRelation")
 
         cfg = dict()
         cfg['Layer'] = target_layer.id()
@@ -221,7 +222,11 @@ class LoadLayers():
         cfg['UseCompleter']= False
         cfg['AllowMulti']= False
         # Add more if you like
-        the_layer.editFormConfig().setWidgetConfig(index, cfg)
+
+        qgseditorwidgetsetup = QgsEditorWidgetSetup("ValueRelation", cfg)
+        the_layer.setEditorWidgetSetup(index, qgseditorwidgetsetup)
+
+        #the_layer.editFormConfig().setWidgetConfig("ValueRelation", cfg)
 
         #u'UseCompleter': False, u'AllowMulti': False, u'AllowNull': True, u'OrderByValue': True, u'Value': u'beskrivning', u'Key': u'typ'
 
@@ -235,7 +240,7 @@ class LoadLayers():
             
     def remove_relations(self):#currently not in use
         # remove relations
-        for key in QgsProject.instance().relationManager().relations().iterkeys():
+        for key in QgsProject.instance().relationManager().relations().keys():
             if key in relations()[1]:
                 del QgsProject.instance().relationManager().relations()[key]
-                print('removed relation %s'%str(key))
+                print(('removed relation %s'%str(key)))

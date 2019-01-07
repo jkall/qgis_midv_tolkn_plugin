@@ -30,5 +30,5 @@
 """
 
 def classFactory(iface):
-    from midv_tolkn import midv_tolkn
+    from .midv_tolkn import midv_tolkn
     return midv_tolkn(iface)
