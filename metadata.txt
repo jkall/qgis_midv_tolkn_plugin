@@ -8,7 +8,7 @@ author=Josef Källgården
 email=groundwatergis@gmail.com
 
 ;optional metadata entries
-qgisMaximumVersion=3.9999
+qgisMaximumVersion=3.9.99
 tags=hydrogeology,groundwater
 icon=icons/midv_tolkn.png
 homepage=https://github.com/jkall/qgis_midv_tolkn_plugin
