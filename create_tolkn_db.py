@@ -17,38 +17,41 @@
  *                                                                         *
  ***************************************************************************/
 """
-import PyQt4.QtCore
-import PyQt4.QtGui
-from qgis.core import QGis
 
-import os
-import locale
-from pyspatialite import dbapi2 as sqlite# pyspatialite is absolutely necessary (sqlite3 not enough) due to InitSpatialMetaData()
+
 import datetime
-#plugin modules
-import midv_tolkn_utils as utils
+import os
+
+from qgis.PyQt.QtCore import QSettings, Qt
+from qgis.PyQt.QtWidgets import QApplication, QFileDialog, QInputDialog
+from qgis.core import Qgis
+from qgis.utils import spatialite_connect
+
+# plugin modules
+from . import midv_tolkn_utils as utils
+
 
 class newdb():
 
-    def __init__(self, verno, user_select_CRS=True, EPSG_code=u'4326', set_locale=False,db_path=''):
+    def __init__(self, verno, user_select_CRS=True, EPSG_code='4326', set_locale=False,db_path=''):
         self.dbpath = db_path
         self.create_new_db(verno,user_select_CRS,EPSG_code, set_locale)  #CreateNewDB(verno)
         
-    def create_new_db(self, verno, user_select_CRS=True, EPSG_code=u'4326', set_locale=False, ):  #CreateNewDB(self, verno):
+    def create_new_db(self, verno, user_select_CRS=True, EPSG_code='4326', set_locale=False, ):  #CreateNewDB(self, verno):
         """Open a new DataBase (create an empty one if file doesn't exists) and set as default DB"""
         if user_select_CRS:
             EPSGID=str(self.ask_for_CRS(set_locale)[0])
         else:
             EPSGID=EPSG_code
-        PyQt4.QtGui.QApplication.setOverrideCursor(PyQt4.QtCore.Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.WaitCursor)
         if EPSGID=='0' or not EPSGID:
             utils.pop_up_info("Cancelling...")
         else: # If a CRS is selectd, go on and create the database
             #path and name of new db
             if self.dbpath =='':
-                self.dbpath = PyQt4.QtGui.QFileDialog.getSaveFileName(None, "Ny tolknings-DB","midv_tolkndb.sqlite","Spatialite (*.sqlite)")
+                self.dbpath = QFileDialog.getSaveFileName(None, "Ny tolknings-DB","midv_tolkndb.sqlite","Spatialite (*.sqlite)")[0]
             if not self.dbpath:
-                PyQt4.QtGui.QApplication.restoreOverrideCursor()
+                QApplication.restoreOverrideCursor()
                 return ''
             #create Spatialite database
             else:
@@ -56,19 +59,19 @@ class newdb():
                 if os.path.exists(self.dbpath):
                     try:
                         os.remove(self.dbpath)
-                    except OSError, e:
+                    except OSError as e:
                         utils.pop_up_info("Error: %s - %s." % (e.filename,e.strerror))
-                        PyQt4.QtGui.QApplication.restoreOverrideCursor()
+                        QApplication.restoreOverrideCursor()
                         return ''
                 try:
                     # creating/connecting the test_db
-                    self.conn = sqlite.connect(self.dbpath) 
+                    self.conn = spatialite_connect(self.dbpath)
                     # creating a Cursor
                     self.cur = self.conn.cursor()
                     self.cur.execute("PRAGMA foreign_keys = ON")    #Foreign key constraints are disabled by default (for backwards compatibility), so must be enabled separately for each database connection separately.
                 except:
                     utils.pop_up_info("Impossible to connect to selected DataBase")
-                    PyQt4.QtGui.QApplication.restoreOverrideCursor()
+                    QApplication.restoreOverrideCursor()
                     return ''
                 #First, find spatialite version
                 versionstext = self.cur.execute('select spatialite_version()').fetchall()
@@ -81,10 +84,10 @@ class newdb():
                 filenamestring = "create_tolkn_db.sql"
 
                 SQLFile = os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",filenamestring)
-                qgisverno = QGis.QGIS_VERSION#We want to store info about which qgis-version that created the db
+                qgisverno = Qgis.QGIS_VERSION#We want to store info about which qgis-version that created the db
                 with open(SQLFile, 'r') as f:
                     f.readline()  # first line is encoding info....
-                    try:                        
+                    try:
                         for line in f:
                             if not line:
                                 continue
@@ -97,7 +100,7 @@ class newdb():
                                 line = line.replace(replace_word, replace_with)
                             #replaced_line = line.replace('CHANGETOQGISVERSION',str(qgisverno)).replace('CHANGETOSPLITEVERSION',str(versionstext[0][0]))
                             self.cur.execute(line)  # use tags to find and replace SRID and versioning info
-                    except Exception, e:
+                    except Exception as e:
                         utils.pop_up_info('Failed to create DB! sql failed:\n' + line + '\n\nerror msg:\n' + str(e))
                     except:
                         utils.pop_up_info('Failed to create DB!')
@@ -117,23 +120,23 @@ class newdb():
                 self.conn.commit()
                 self.conn.close()
                 #create SpatiaLite Connection in QGIS QSettings
-                settings=PyQt4.QtCore.QSettings()
+                settings=QSettings()
                 settings.beginGroup('/SpatiaLite/connections')
-                settings.setValue(u'%s/sqlitepath'%os.path.basename(self.dbpath),'%s'%self.dbpath)
+                settings.setValue('%s/sqlitepath'%os.path.basename(self.dbpath),'%s'%self.dbpath)
                 settings.endGroup()
 
                 #Finally add the layer styles info into the data base
                 AddLayerStyles(self.dbpath)
 
-        PyQt4.QtGui.QApplication.restoreOverrideCursor()
+        QApplication.restoreOverrideCursor()
 
     def ask_for_CRS(self, set_locale):
-        # USER MUST SELECT CRS FIRST!! 
-        if set_locale == u'sv_SE':
+        # USER MUST SELECT CRS FIRST!!
+        if set_locale == 'sv_SE':
             default_crs = 3006
         else:
             default_crs = 4326
-        EPSGID = PyQt4.QtGui.QInputDialog.getInteger(None, "Select CRS", "Give EPSG-ID (integer) corresponding to\nthe CRS you want to use in the database:",default_crs)
+        EPSGID = QInputDialog.getInt(None, "Select CRS", "Give EPSG-ID (integer) corresponding to\nthe CRS you want to use in the database:",default_crs)
         return EPSGID
 
     def insert_datadomains(self):
@@ -153,7 +156,7 @@ class newdb():
                     continue
                 try:
                     self.cur.execute(line)  # use tags to find and replace SRID and versioning info
-                except Exception, e:
+                except Exception as e:
                     utils.pop_up_info('Failed to create DB! sql failed:\n' + line + '\n\nerror msg:\n' + str(e))
 
 
@@ -162,7 +165,7 @@ class AddLayerStyles():
     def __init__(self, dbpath):
         self.dbpath = dbpath
         # creating/connecting the test_db
-        self.conn = sqlite.connect(self.dbpath) 
+        self.conn = spatialite_connect(self.dbpath)
         # creating a Cursor
         self.cur = self.conn.cursor()
         self.cur.execute("PRAGMA foreign_keys = ON")    #Foreign key constraints are disabled by default (for backwards compatibility), so must be enabled separately for each database connection separately.
@@ -204,10 +207,10 @@ class AddLayerStyles():
     def style_from_file_into_db(self,layer,qml_file, sld_file):
         with open(os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",qml_file), 'r') as content_file:
             content = content_file.read()
-        self.cur.execute("update layer_styles set styleQML=? where f_table_name=?",(content.decode('utf-8'),layer))#Use parameterized arguments to allow sqlite3 to escape the quotes for you. (It also helps prevent SQL injection.
+        self.cur.execute("update layer_styles set styleQML=? where f_table_name=?",(content,layer))#Use parameterized arguments to allow sqlite3 to escape the quotes for you. (It also helps prevent SQL injection.
         #"UPDATE posts SET html = ? WHERE id = ?", (html ,temp[i][1])
         """
         with open(os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",sld_file), 'r') as content_file:
             content = content_file.read()
-        self.cur.execute("update layer_styles set styleSLD=? where f_table_name=?",(content.decode('utf-8'),layer))#Use parameterized arguments to allow sqlite3 to escape the quotes for you. (It also helps prevent SQL injection.
+        self.cur.execute("update layer_styles set styleSLD=? where f_table_name=?",(content,layer))#Use parameterized arguments to allow sqlite3 to escape the quotes for you. (It also helps prevent SQL injection.
         """
