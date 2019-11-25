@@ -3,12 +3,12 @@
 name=midv_tolkn
 qgisMinimumVersion=3.4.3
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.5.0b1
+version=Version 0.5.0b2
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
 ;optional metadata entries
-qgisMaximumVersion=3.9.99
+qgisMaximumVersion=3.999.999
 tags=hydrogeology,groundwater
 icon=icons/midv_tolkn.png
 homepage=https://github.com/jkall/qgis_midv_tolkn_plugin
@@ -19,6 +19,8 @@ experimental=False
 deprecated=False
 
 changelog=
+        Version 0.5.0b2
+        - Adjusted metadata post qgisMaximumVersion.
         Version 0.5.0b1
         - Adjustments for QGIS3
         Version 0.4.8
