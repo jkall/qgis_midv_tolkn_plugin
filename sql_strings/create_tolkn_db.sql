@@ -37,4 +37,4 @@ SELECT AddGeometryColumn("trptid", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOL
 SELECT AddGeometryColumn("omattad_zon", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("profillinje", "geometry", CHANGETORELEVANTEPSGID, "LINESTRING", "XY", 0);
 create view "tillromr_summaflode" as select "namn", sum("flode_lPs") as summa_flode_lPs from "tillromr" group by "namn";
-CREATE VIEW profilbilder AS SELECT a.rowid AS rowid, a.name, b.geometry AS geometry FROM obs_points AS a JOIN w_qual_field AS b using (obsid);
+--CREATE VIEW profilbilder AS SELECT a.rowid AS rowid, a.name, b.geometry AS geometry FROM profil AS a JOIN profillinje AS b ON a.profillinje = b.pkuid;
