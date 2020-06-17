@@ -26,7 +26,7 @@ CREATE TABLE "strukturlinje"(pkuid integer primary key autoincrement,"namn" text
 CREATE TABLE "trptid"(pkuid integer primary key autoincrement,"typ" integer,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_trptid(typ));
 CREATE TABLE "omattad_zon"(pkuid integer primary key autoincrement,"typ" integer,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_omattad_zon(typ));
 CREATE TABLE "profillinje"(pkuid integer primary key autoincrement, "namn" text not null, "projekt" integer not null, "rapportnamn" text, "kommentar" text, "geom_updated" text, FOREIGN KEY(projekt) REFERENCES zz_projekt(pkuid), UNIQUE (projekt, namn));
-CREATE TABLE "profil"(pkuid integer primary key autoincrement, profillinje integer, "namn" text not null, "projekt" integer not null, "rapportnamn" text, "kommentar" text, "path" text not null, "updated" text, FOREIGN KEY(profillinje) REFERENCES profillinje(pkuid), FOREIGN KEY(projekt) REFERENCES zz_projekt(pkuid), UNIQUE (projekt, namn));
+--CREATE TABLE "profil"(pkuid integer primary key autoincrement, profillinje integer, "namn" text not null, "projekt" integer not null, "rapportnamn" text, "kommentar" text, "path" text not null, "updated" text, FOREIGN KEY(profillinje) REFERENCES profillinje(pkuid), FOREIGN KEY(projekt) REFERENCES zz_projekt(pkuid), UNIQUE (projekt, namn));
 SELECT AddGeometryColumn("gvmag", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("gvflode", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
 SELECT AddGeometryColumn("gvdel", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
