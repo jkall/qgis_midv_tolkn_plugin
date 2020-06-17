@@ -16,6 +16,7 @@ CREATE TABLE "zz_tillromr"(pkuid integer primary key autoincrement,"typ" text un
 CREATE TABLE "zz_strukturlinje"(pkuid integer primary key autoincrement,"typ" text unique not null,"beskrivning" text);
 CREATE TABLE "zz_trptid"(pkuid integer primary key autoincrement,"typ" integer unique not null,"beskrivning" text);
 CREATE TABLE "zz_omattad_zon"(pkuid integer primary key autoincrement,"typ" integer unique not null,"beskrivning" text);
+CREATE TABLE "zz_projekt" (pkuid integer primary key autoincrement,"namn" text unique not null,"kommentar" text);
 CREATE TABLE "gvmag"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_gvmag(typ));
 CREATE TABLE "gvflode"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text,"intermag" text, "updated" text,FOREIGN KEY(typ) REFERENCES zz_gvflode(typ), FOREIGN KEY(intermag) REFERENCES zz_gvmag(typ));
 CREATE TABLE "gvdel"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_gvdel(typ));
@@ -24,6 +25,8 @@ CREATE TABLE "sprickzon"(pkuid integer primary key autoincrement,"namn" text,"ty
 CREATE TABLE "strukturlinje"(pkuid integer primary key autoincrement,"namn" text,"typ" text,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_strukturlinje(typ));
 CREATE TABLE "trptid"(pkuid integer primary key autoincrement,"typ" integer,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_trptid(typ));
 CREATE TABLE "omattad_zon"(pkuid integer primary key autoincrement,"typ" integer,"ursprung" text,"kommentar" text, "updated" text, FOREIGN KEY(typ) REFERENCES zz_omattad_zon(typ));
+CREATE TABLE "profillinje"(pkuid integer primary key autoincrement, "namn" text not null, "projekt" integer not null, "rapportnamn" text, "kommentar" text, "geom_updated" text, FOREIGN KEY(projekt) REFERENCES zz_projekt(pkuid), UNIQUE (projekt, namn));
+CREATE TABLE "profil"(pkuid integer primary key autoincrement, profillinje integer, "namn" text not null, "projekt" integer not null, "rapportnamn" text, "kommentar" text, "path" text not null, "updated" text, FOREIGN KEY(profillinje) REFERENCES profillinje(pkuid), FOREIGN KEY(projekt) REFERENCES zz_projekt(pkuid), UNIQUE (projekt, namn));
 SELECT AddGeometryColumn("gvmag", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("gvflode", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
 SELECT AddGeometryColumn("gvdel", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
@@ -32,4 +35,6 @@ SELECT AddGeometryColumn("sprickzon", "geometry", CHANGETORELEVANTEPSGID, "MULTI
 SELECT AddGeometryColumn("strukturlinje", "geometry", CHANGETORELEVANTEPSGID, "MULTILINESTRING", "XY", 0);
 SELECT AddGeometryColumn("trptid", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
 SELECT AddGeometryColumn("omattad_zon", "geometry", CHANGETORELEVANTEPSGID, "MULTIPOLYGON", "XY", 0);
+SELECT AddGeometryColumn("profillinje", "geometry", CHANGETORELEVANTEPSGID, "LINESTRING", "XY", 0);
 create view "tillromr_summaflode" as select "namn", sum("flode_lPs") as summa_flode_lPs from "tillromr" group by "namn";
+CREATE VIEW profilbilder AS SELECT a.rowid AS rowid, a.name, b.geometry AS geometry FROM obs_points AS a JOIN w_qual_field AS b using (obsid);

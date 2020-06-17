@@ -90,17 +90,18 @@ class LoadLayers():
             layer_list.append(layer)
             layer_name_list.append(layer.name())
 
-        # Then the specific table for gw flow sum
-        try:
-            uristring= 'dbname="' + self.dbpath + '" ' + r"""table='tillromr_summaflode'"""
-            layer = QgsVectorLayer(uristring,'tillromr_summaflode', 'spatialite')
-            layer_list.append(layer)
-        except:
-            pass
+        # Then some specific tables
+        for tablename in ['tillromr_summaflode']: #, 'profil' # Implementera vid behov
+            try:
+                uristring= 'dbname="' + self.dbpath + '" ' + r"""table='{}'""".format(tablename)
+                layer = QgsVectorLayer(uristring, tablename, 'spatialite')
+                layer_list.append(layer)
+            except:
+                pass
 
         #then load all spatial layers
         layers = default_layers()  # ordered dict with layer-name:(zz_layer-name,layer_name_for_map_legend)
-        for tablename,tup in list(layers.items()):
+        for tablename, tup in list(layers.items()):
             try:
                 uri.setDataSource('',tablename,'geometry')
                 layer = QgsVectorLayer(uri.uri(), tablename, 'spatialite') # Adding the layer as 'spatialite' instead of ogr vector layer is preferred
@@ -108,7 +109,7 @@ class LoadLayers():
                     layer_list.append(layer)
                     layer_name_list.append(layer.name())
                 else:
-                    qgis.utils.iface.messageBar().pushMessage("Warning","Table %s not found in db. DB probably created w old plugin version."%str(tablename), 1,duration=5)
+                    qgis.utils.iface.messageBar().pushMessage("Warning","Table %s was not valid. DB probably created w old plugin version."%str(tablename), 1,duration=5)
             except:
                 qgis.utils.iface.messageBar().pushMessage("Warning","Table %s not found in db. DB probably created w old plugin version."%str(tablename), 1,duration=5)
         #now loop over all the layers and set styles etc
@@ -118,6 +119,7 @@ class LoadLayers():
                 MySubGroup.insertLayer(0,layer)
             else:
                 MyGroup.insertLayer(0,layer)
+
             layer_dict[layer.name()] = layer
 
             #now try to load the style file
@@ -131,6 +133,12 @@ class LoadLayers():
             else:
                 pass
 
+            if layer.name() in defs.unchecked_layers():
+                #QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(False)
+                MyGroup.findLayer(layer.id()).setItemVisibilityChecked(False)
+                #w_lvls_last_geom.setItemVisibilityCheckedRecursive(False)
+
+
         MySubGroup.setExpanded(False)
         
         # fix value relations
@@ -142,6 +150,8 @@ class LoadLayers():
 
         #special fix for gvflode
         self.create_layer_value_relations(layer_dict['gvflode'], layer_dict['zz_gvmag'], layer_dict['gvflode'].dataProvider().fieldNameIndex('intermag'), 'typ','beskrivning')
+        for layer_projekt in ['profillinje']: #, 'profil' # Implementera vid behov
+            self.create_layer_value_relations(layer_dict[layer_projekt], layer_dict['zz_projekt'], layer_dict[layer_projekt].dataProvider().fieldNameIndex('projekt'), 'pkuid','namn')
 
         #last, rename to readable names in map legend
         for layer in layer_list:

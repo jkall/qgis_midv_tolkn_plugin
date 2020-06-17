@@ -30,7 +30,15 @@ def default_layers(): # dictionary of layers with (some) corresponding data doma
     d['tillromr']=('zz_tillromr','tillrinningsområden')
     d['trptid']=('zz_trptid','transporttid')
     d['omattad_zon']=('zz_omattad_zon','omättad zon')
+    d['profillinje']=(None, 'profillinje')
     return d
+
+def unchecked_layers():
+    """
+    Layers that should not be checked in map layer list
+    :return:
+    """
+    return ['profillinje']
 
 def relations(): #CURRENTLY NOT IN USE tuple of relation_names and relation_ids
     return (('gvmag_relation','gvmag_relation_id'),('gvdel_relation','gvdel_relation_id'),('gvflode_relation','gvflode_relation_id'),('tillromr_relation','tillromr_relation_id'),('strukturlinje_relation','strukturlinje_relation_id'),('trptid_relation','trptid_relation_id'))
