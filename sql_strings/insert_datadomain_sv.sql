@@ -5,6 +5,7 @@ insert into  "zz_gvflode"("typ","beskrivning") values ('överlagrande magasin','
 insert into  "zz_gvflode"("typ","beskrivning") values ('ytliga jordlager','i ytliga jordlager');
 insert into  "zz_gvflode"("typ","beskrivning") values ('berg','i berggrunden');
 insert into  "zz_gvflode"("typ","beskrivning") values ('ospec','ospecificierat grundvattenflöde');
+insert into  "zz_gvflode"("typ","beskrivning") values ('ytvatten','i ytvatten');
 insert into  "zz_gvdel"("typ","beskrivning") values ('fast','fast grundvattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('rörlig','rörlig grundvattendelare');
 insert into  "zz_gvdel"("typ","beskrivning") values ('annan gräns','annan gräns');
@@ -16,6 +17,7 @@ insert into  "zz_gvmag"("typ","beskrivning") values ('ytliga jordlager','magasin
 insert into  "zz_gvmag"("typ","beskrivning") values ('berg','magasin i berggrunden');
 insert into  "zz_gvmag"("typ","beskrivning") values ('annat','annat magasin, t.ex. ytvatten');
 insert into  "zz_gvmag"("typ","beskrivning") values ('ospec','ospecificierat');
+insert into  "zz_gvmag"("typ","beskrivning") values ('ytvatten','ytvatten');
 insert into  "zz_tillromr"("typ","beskrivning") values ('a','typ a - hela gvbildn infiltrerar direkt till magasinet');
 insert into  "zz_tillromr"("typ","beskrivning") values ('b','typ b - hela gvbildn når magasinet via något annat magasin');
 insert into  "zz_tillromr"("typ","beskrivning") values ('c','typ c - delar av gvbildn når magasinet');
