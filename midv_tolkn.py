@@ -56,22 +56,22 @@ class midv_tolkn:
         # Create actions
         icon = QIcon(os.path.join(self.plugin_dir, "icons", "midv_tolkn.png"))
         
-        self.actionloadthelayers = QAction(QIcon(":/plugins/midv_tolkn/icons/load_layers_domains.png"), "Ladda tolkningslager t QGIS", self.iface.mainWindow())
+        self.actionloadthelayers = QAction(QIcon(os.path.join(self.plugin_dir, 'icons', 'load_layers_domains.png')), "Ladda tolkningslager t QGIS", self.iface.mainWindow())
         self.actionloadthelayers.setWhatsThis("Laddar tolkningslager för gvmagasin m.m. till QGIS")
         self.actionloadthelayers.triggered.connect(lambda x: self.load_the_layers())
 
-        self.actionNewDB = QAction(QIcon(":/plugins/midv_tolkn/icons/create_new.png"), "Skapa en ny tolkningsdatabas", self.iface.mainWindow())
+        self.actionNewDB = QAction(QIcon(os.path.join(self.plugin_dir, 'icons', 'create_new.png')), "Skapa en ny tolkningsdatabas", self.iface.mainWindow())
         self.actionNewDB.triggered.connect(lambda x: self.new_db())
 
-        self.actionVacuumDB = QAction(QIcon(":/plugins/midv_tolkn/icons/vacuum.png"), "Packa (vacuum) tolkn-db", self.iface.mainWindow())
+        self.actionVacuumDB = QAction(QIcon(os.path.join(self.plugin_dir, 'icons', 'vacuum.png')), "Packa (vacuum) tolkn-db", self.iface.mainWindow())
         self.actionVacuumDB.setWhatsThis("Perform database vacuuming")
         self.actionVacuumDB.triggered.connect(lambda x: self.vacuum_db())
 
-        self.actionZipDB = QAction(QIcon(":/plugins/midv_tolkn/icons/zip.png"), "Backup av tolknings-databas", self.iface.mainWindow())
+        self.actionZipDB = QAction(QIcon(os.path.join(self.plugin_dir, 'icons', 'zip.png')), "Backup av tolknings-databas", self.iface.mainWindow())
         self.actionZipDB.setWhatsThis("En komprimerad zip-fil kommer att skapas i samma dir som tolknings-databasen.")
         self.actionZipDB.triggered.connect(lambda x: self.zip_db())
 
-        self.actionUpgradeDB = QAction(QIcon(":/plugins/midv_tolkn/icons/create_new.png"), "Uppgradera tolknings-databas", self.iface.mainWindow())
+        self.actionUpgradeDB = QAction(QIcon(os.path.join(self.plugin_dir, 'icons', 'create_new.png')), "Uppgradera tolknings-databas", self.iface.mainWindow())
         self.actionUpgradeDB.setWhatsThis("Uppgradera en befintlig tolknings-databas till ny databas-struktur.")
         self.actionUpgradeDB.triggered.connect(lambda x: self.upgrade_db())
 

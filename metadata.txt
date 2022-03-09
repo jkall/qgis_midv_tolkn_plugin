@@ -3,7 +3,7 @@
 name=midv_tolkn
 qgisMinimumVersion=3.4.3
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.6.1
+version=Version 0.6.2
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
@@ -19,6 +19,10 @@ experimental=False
 deprecated=False
 
 changelog=
+        Version 0.6.2
+        - Fixed icons not showing.
+        Version 0.6.1
+        - Added ytvatten as gvmag and gvflode.
         Version 0.6.1
         - Added ytvatten as gvmag and gvflode.
         Version 0.6.0
