@@ -201,7 +201,9 @@ class midv_tolkn:
         #now create database of the updated design
         from .create_tolkn_db import newdb
         newdbinstance = newdb(verno, user_select_CRS=False, EPSG_code = EPSG[1][0][0], set_locale=set_locale)
-
+        if not newdbinstance.dbpath:
+            QApplication.restoreOverrideCursor()
+            return None
         #transfer data to the new database
         foo = utils.UpgradeDatabase(from_db,newdbinstance.dbpath, EPSG)
 

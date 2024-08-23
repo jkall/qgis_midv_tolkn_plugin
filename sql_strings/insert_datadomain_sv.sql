@@ -15,9 +15,7 @@ insert into  "zz_gvmag"("typ","beskrivning") values ('jordlager','magasin i jord
 insert into  "zz_gvmag"("typ","beskrivning") values ('överlagrande magasin','magasin i jordlager som överlagrar något annat magasin');
 insert into  "zz_gvmag"("typ","beskrivning") values ('ytliga jordlager','magasin i ytliga jordlager');
 insert into  "zz_gvmag"("typ","beskrivning") values ('berg','magasin i berggrunden');
-insert into  "zz_gvmag"("typ","beskrivning") values ('annat','annat magasin, t.ex. ytvatten');
-insert into  "zz_gvmag"("typ","beskrivning") values ('ospec','ospecificierat');
-insert into  "zz_gvmag"("typ","beskrivning") values ('ytvatten','ytvatten');
+insert into  "zz_gvmag"("typ","beskrivning") values ('möjligt','möjligt magasin');
 insert into  "zz_tillromr"("typ","beskrivning") values ('a','typ a - hela gvbildn infiltrerar direkt till magasinet');
 insert into  "zz_tillromr"("typ","beskrivning") values ('b','typ b - hela gvbildn når magasinet via något annat magasin');
 insert into  "zz_tillromr"("typ","beskrivning") values ('c','typ c - delar av gvbildn når magasinet');

@@ -48,11 +48,13 @@ class newdb():
             utils.pop_up_info("Cancelling...")
         else: # If a CRS is selectd, go on and create the database
             #path and name of new db
-            if self.dbpath =='':
+            if self.dbpath == '':
+                QApplication.restoreOverrideCursor()
                 self.dbpath = QFileDialog.getSaveFileName(None, "Ny tolknings-DB","midv_tolkndb.sqlite","Spatialite (*.sqlite)")[0]
+                QApplication.setOverrideCursor(Qt.WaitCursor)
             if not self.dbpath:
                 QApplication.restoreOverrideCursor()
-                return ''
+                return
             #create Spatialite database
             else:
                 #delete the file if exists
@@ -126,7 +128,7 @@ class newdb():
                 settings.endGroup()
 
                 #Finally add the layer styles info into the data base
-                AddLayerStyles(self.dbpath)
+                #AddLayerStyles(self.dbpath)
 
         QApplication.restoreOverrideCursor()
 

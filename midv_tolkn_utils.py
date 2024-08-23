@@ -208,13 +208,20 @@ class UpgradeDatabase():#in use
 
     def to_sql(self, tname):
         columns_list = self.curs.execute("""PRAGMA table_info(%s)"""%tname).fetchall()
-        column_names = ', '.join([col[1] for col in columns_list]) #Load column names from sqlite table
+        columns_list = [col[1] for col in columns_list]
 
-        sql = r"insert or ignore into %s select %s from a.%s" %(tname, column_names, tname)
+        if tname.startswith('zz_'):
+            columns_list = [col for col in columns_list if col != 'pkuid']
+
+        column_names = ', '.join(columns_list)
+
         try:
+            sql = r"insert or ignore into %s (%s) select %s from a.%s" % (
+                tname, column_names, column_names, tname)
             self.curs.execute(sql)
         except Exception as e:
             MessagebarAndLog.critical("Export warning: sql failed. See message log.", sql + "\nmsg: " + str(e))
+
 
 def find_layer(layer_name):
     for name, search_layer in QgsProject.instance().mapLayers().items():

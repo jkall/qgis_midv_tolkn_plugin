@@ -20,6 +20,8 @@
 
 
 import os
+import sqlite3
+import re
 
 import qgis.utils
 from qgis.PyQt.QtCore import Qt
@@ -113,6 +115,10 @@ class LoadLayers():
             except:
                 qgis.utils.iface.messageBar().pushMessage("Warning","Table %s not found in db. DB probably created w old plugin version."%str(tablename), 1,duration=5)
         #now loop over all the layers and set styles etc
+
+        db_version = self.get_db_version()
+        styles_folder = self.get_styles_folder(db_version)
+
         for layer in layer_list:
             QgsProject.instance().addMapLayers([layer],False)
             if layer.name() in d_domain_tables:
@@ -123,7 +129,7 @@ class LoadLayers():
             layer_dict[layer.name()] = layer
 
             #now try to load the style file
-            stylefile = os.path.join(os.sep,os.path.dirname(__file__),"sql_strings",layer.name() + ".qml")
+            stylefile = os.path.join(styles_folder, layer.name() + ".qml")
             try:
                 layer.loadNamedStyle(stylefile)
             except:
@@ -255,3 +261,40 @@ class LoadLayers():
             if key in relations()[1]:
                 del QgsProject.instance().relationManager().relations()[key]
                 print(('removed relation %s'%str(key)))
+
+    def get_db_version(self):
+        con = sqlite3.connect(self.dbpath)
+        try:
+            cur = con.cursor()
+            cur.execute('select description FROM about_db LIMIT 1')
+            desc = cur.fetchone()[0]
+        except:
+            con.close()
+            raise
+        else:
+            con.close()
+
+        m = re.search('midv_tolkn plugin[Version\ ]*([0-9\.]+),', desc, flags=re.IGNORECASE)
+        if m:
+            db_version = m.groups()[0]
+        else:
+            qgis.utils.iface.messageBar().pushMessage("Information",
+                                                      """Version number of database could not be parsed. Using oldest layer styles.""",
+                                                      1, duration=10)
+            db_version = None
+        return db_version
+
+    def get_styles_folder(self, db_version):
+        basefolder = os.path.join(os.path.dirname(__file__), 'layer_styles')
+        version_foldername = {k.replace('_', '.'): os.path.join(basefolder, k)
+                              for k in os.listdir(basefolder) if os.path.isdir(os.path.join(basefolder, k))}
+        version_foldername = dict(sorted(version_foldername.items(), reverse=True))
+
+        # Using oldest styles folder as default
+        styles_folder = list(version_foldername.values())[-1]
+        if db_version is not None:
+            for folder_version, path in version_foldername.items():
+                if db_version >= folder_version:
+                    styles_folder = path
+                    break
+        return styles_folder
