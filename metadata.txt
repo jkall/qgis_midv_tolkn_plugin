@@ -3,7 +3,7 @@
 name=midv_tolkn
 qgisMinimumVersion=3.4.3
 description=Skapar en tolkningsdatabas och laddar dess lager till ditt qgis-projekt.
-version=Version 0.7.0
+version=Version 0.7.1
 author=Josef Källgården
 email=groundwatergis@gmail.com
 
@@ -19,6 +19,8 @@ experimental=False
 deprecated=False
 
 changelog=
+        Version 0.7.1:
+        - Updated styled for gvflode intermag to easier distinguish the two types.
         Version 0.7.0:
         - Updated layer styles for gvmag and gvflode:
                gvmag: typ "ospec" and "ytvatten" replaced with "möjligt magasin".
